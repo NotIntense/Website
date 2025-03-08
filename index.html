@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <title>NotIntense | Portfolio</title>
     <script type="module" src="/main.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +21,7 @@
       body { margin: 0; }
 
 	  .font-exo {
-		font-family: 'Big Shoulders', sans-serif;
+		font-family: "Jersey 25", sans-serif;
 	  }
 
 	  .ibm-plex-mono-regular {
@@ -28,43 +29,68 @@
   		font-weight: 400;
   		font-style: normal;
 	  }		
+
+	  
     </style>
   </head>
-  <body class="flex justify-center items-center">
+  <body class="flex justify-center items-center" style="overflow:hidden">
     <div id="app" class="absolute text-center text-white" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
       <h1 class="ibm-plex-mono-regular text-4xl tracking-wide">NotIntense</h1>
       <p class="font-exo text-5xl">Self-Taught Game Developer</p>
 	  <div class="space-x-7 space-y-3">
-        <a 
-		 href="https://threejs.org/docs/#manual/en/introduction/Installation"
-			class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">View projects ➔</a>
+        <button
+			id="projectButton" class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">View projects ➔</button>
         <a 
 		 href="https://threejs.org/docs/#manual/en/introduction/Installation"
 			class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">Autobiography ➔</a>
-			
+<!-- PROJECTS SECTION -->
+		<div class="flex justify-center items-center" style="overflow:hidden">
+			<h1 class="absolute ibm-plex-mono-regular text-3xl tracking-wide" style="top: 1320%; left: 50%; transform: translate(-50%, -50%);">What I have worked on:</h1>
+
+			<button id="scpValravnButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" onclick="toggleValravn()" style="top: 1400%; left: 18%; transform: translate(-50%, -50%);">SCP: Valravn</button>
+			<button id="scpLabratButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1450%; left: 18%; transform: translate(-50%, -50%);">SCP: Labrat</button>
+			<button id="goBackButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1500%; left: 18%; transform: translate(-50%, -50%);">Go Back</button>
+
+			<div id="valravnDivider" class="flex text-left" style="overflow:hidden; opacity: 1;"> <!-- CHANGE BACK TO 0 -->
+				<p class="absolute ibm-plex-mono-regular tracking-wide " style="top: 1395%; left: 70%; transform: translate(-50%, -50%); text-justify: distribute; text-align:start;">
+					Featuring a mix of stealth and high-octane action, SCP: Valravn follows in the footsteps of games like F.E.A.R. and Trepang 2: 
+                        - Infiltrate the labs of nefarious Valravn research facilities as Leena Sorjova, an elite GOC combat operative.
+				</p>
+			</div>			
+		</div>
+<!-- END PROJECTS SECTION -->
       </div>
     </div>
 	<div class="absolute text-center text-white" style="top: 95%; left: 98%; transform: translate(-50%, -50%);">
 		<button id="volumeMuteButton" onclick="onButtonClicked()">
 		  <i id="volumeIcon" class="fa-solid fa-volume-xmark"></i>
 		</button>
-	  </div>	  
+	</div>	  
   </body>
 
   <script>
-
 	function onButtonClicked() {
-	  const buttonIcon = document.getElementById('volumeIcon');
+		const buttonIcon = document.getElementById("volumeIcon");
   
-	  if (buttonIcon.classList.contains('fa-volume-xmark')) {
-		buttonIcon.classList.remove('fa-volume-xmark');
-		buttonIcon.classList.add('fa-volume-high');
-		
-	  } else {
-		buttonIcon.classList.remove('fa-volume-high');
-		buttonIcon.classList.add('fa-volume-xmark');
+		if (buttonIcon.classList.contains("fa-volume-xmark")) {
+		  buttonIcon.classList.remove("fa-volume-xmark");
+		  buttonIcon.classList.add("fa-volume-high");
+		} else {
+		  buttonIcon.classList.remove("fa-volume-high");
+		  buttonIcon.classList.add("fa-volume-xmark");
+		}
 	  }
-	}
+
+	  window.toggleValravn = function () {
+		let divider = document.getElementById("valravnDivider");
+		let isHidden = window.getComputedStyle(divider).opacity == "0";
+		gsap.to("#valravnDivider", {
+		  opacity: isHidden ? 1 : 0,
+		  duration: 1,
+		  ease: "power2.out",
+		});
+	  };
   </script>
+  
 </html>
 

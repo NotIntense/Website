@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { createStarfield } from '/Code/Stars.js';
+import gsap from "gsap";
 
 document.addEventListener('DOMContentLoaded', () => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1);
 
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -20,29 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const listener = new THREE.AudioListener();
     camera.add(listener);
-
+    
     const sound = new THREE.Audio(listener);
-
     const audioLoader = new THREE.AudioLoader();
+    
     audioLoader.load('/Music/NOTINTENSE_FINAL.ogg', function(buffer) {
         sound.setBuffer(buffer);
         sound.setLoop(true);
         sound.setVolume(0.5);
         sound.play();
     });
-
+    
     function playMusic(bool) {
-        audioLoader.load('/Music/NOTINTENSE_FINAL.ogg', function(buffer) {
-            sound.setBuffer(buffer);
-            sound.setLoop(true);
-            sound.setVolume(0.5);
-
-            if (bool) {
+        if (bool) {
+            if (!sound.isPlaying) {
                 sound.play();
-            } else {
-                sound.stop();
             }
-        });
+        } else {
+            sound.stop();
+        }
     }
 
     const button = document.getElementById('volumeMuteButton');
@@ -57,7 +54,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 playMusic(true);
             }
         });
-    } else {
-        console.error('Button or Icon not found');
     }
+
+    const projectButton = document.getElementById('projectButton');
+    projectButton.addEventListener("click", () => {
+        gsap.to(camera.position, {
+            y: camera.position.y - 20,
+            duration: 4,
+            ease: "power2.out" 
+        });
+    
+        gsap.to("#app", {
+            y: "-=2000", 
+            duration: 4,
+            ease: "power2.out"
+        });
+    });
+
+    const goBackButtonButton = document.getElementById('goBackButton');
+    goBackButtonButton.addEventListener("click", () => {
+        gsap.to(camera.position, {
+            y: camera.position.y + 20,
+            duration: 4,
+            ease: "power2.out" 
+        });
+    
+        gsap.to("#app", {
+            y: "+=2000", 
+            duration: 4,
+            ease: "power2.out"
+        });
+    });
 });
