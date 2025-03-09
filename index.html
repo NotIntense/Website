@@ -47,16 +47,37 @@
 		<div class="flex justify-center items-center" style="overflow:hidden">
 			<h1 class="absolute ibm-plex-mono-regular text-3xl tracking-wide" style="top: 1320%; left: 50%; transform: translate(-50%, -50%);">What I have worked on:</h1>
 
-			<button id="scpValravnButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" onclick="toggleValravn()" style="top: 1400%; left: 18%; transform: translate(-50%, -50%);">SCP: Valravn</button>
+			<button id="scpValravnButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1400%; left: 18%; transform: translate(-50%, -50%);">SCP: Valravn</button>
 			<button id="scpLabratButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1450%; left: 18%; transform: translate(-50%, -50%);">SCP: Labrat</button>
 			<button id="goBackButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1500%; left: 18%; transform: translate(-50%, -50%);">Go Back</button>
 
 			<div id="valravnDivider" class="flex text-left" style="overflow:hidden; opacity: 1;"> <!-- CHANGE BACK TO 0 -->
 				<p class="absolute ibm-plex-mono-regular tracking-wide " style="top: 1395%; left: 70%; transform: translate(-50%, -50%); text-justify: distribute; text-align:start;">
-					Featuring a mix of stealth and high-octane action, SCP: Valravn follows in the footsteps of games like F.E.A.R. and Trepang 2: 
-                        - Infiltrate the labs of nefarious Valravn research facilities as Leena Sorjova, an elite GOC combat operative.
+					<div class="absolute" style="max-width: 500px; overflow: hidden; top: 1455%; left: 80%; transform: translate(-50%, -50%); ">
+						<iframe 
+							src="https://store.steampowered.com/widget/2707670/" 
+							frameborder="0" 
+							width="500" 
+							height="200"
+							style="transform: scale(0.8); transform-origin: top left;">
+						</iframe>
+					</div>
 				</p>
-			</div>			
+			</div>		
+			<div id="labratDivider" class="flex text-left" style="overflow:hidden; opacity: 0;"> <!-- CHANGE BACK TO 0 -->
+				<p class="absolute ibm-plex-mono-regular tracking-wide " style="top: 1425%; left: 70%; transform: translate(-50%, -50%); text-justify: distribute; text-align:start;">
+					<div class="absolute" style="max-width: 500px; overflow: hidden; top: 1455%; left: 80%; transform: translate(-50%, -50%); ">
+						<iframe 
+							src="https://store.steampowered.com/widget/1402020/" 
+							frameborder="0" 
+							width="500" 
+							height="200"
+							style="transform: scale(0.8); transform-origin: top left;">
+						</iframe>
+					</div>
+				</p>
+			</div>		
+			
 		</div>
 <!-- END PROJECTS SECTION -->
       </div>
@@ -66,6 +87,11 @@
 		  <i id="volumeIcon" class="fa-solid fa-volume-xmark"></i>
 		</button>
 	</div>	  
+	<div class="absolute text-center" style="top: 90%; left: 98%; transform: translate(-50%, -50%);">
+		<a href="https://github.com/NotIntense" target="_blank" class="text-white">
+			<i class="fa-brands fa-github"></i>
+		</a>
+	</div>
   </body>
 
   <script>
@@ -79,16 +105,6 @@
 		  buttonIcon.classList.remove("fa-volume-high");
 		  buttonIcon.classList.add("fa-volume-xmark");
 		}
-	  }
-
-	  window.toggleValravn = function () {
-		let divider = document.getElementById("valravnDivider");
-		let isHidden = window.getComputedStyle(divider).opacity == "0";
-		gsap.to("#valravnDivider", {
-		  opacity: isHidden ? 1 : 0,
-		  duration: 1,
-		  ease: "power2.out",
-		});
 	  };
   </script>
   
