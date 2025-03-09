@@ -44,41 +44,55 @@
 		 href="https://threejs.org/docs/#manual/en/introduction/Installation"
 			class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">Autobiography ➔</a>
 <!-- PROJECTS SECTION -->
-		<div class="flex justify-center items-center" style="overflow:hidden">
-			<h1 class="absolute ibm-plex-mono-regular text-3xl tracking-wide" style="top: 1320%; left: 50%; transform: translate(-50%, -50%);">What I have worked on:</h1>
+<div class="flex justify-center items-center" style="overflow:hidden">
+	<h1 class="absolute ibm-plex-mono-regular text-3xl tracking-wide" style="top: 1300%; left: 50%; transform: translate(-50%, -50%); white-space:nowrap">Games I've have worked on:</h1>
+	<h1 class="absolute ibm-plex-mono-regular text-2xl tracking-wide" style="top: 1350%; left: 10%; transform: translate(-50%, -50%); white-space:nowrap">SCP: Valravn</h1>
+	<h1 class="absolute ibm-plex-mono-regular text-2xl tracking-wide" style="top: 1350%; left: 103%; transform: translate(-50%, -50%); white-space:nowrap">SCP: Labrat</h1>
+	
+	<button id="goBackButton" class="absolute text-left text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1650%; left: -95%; transform: translate(0, -50%);">Go Back</button>
 
-			<button id="scpValravnButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1400%; left: 18%; transform: translate(-50%, -50%);">SCP: Valravn</button>
-			<button id="scpLabratButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1450%; left: 18%; transform: translate(-50%, -50%);">SCP: Labrat</button>
-			<button id="goBackButton" class="absolute text-center text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1500%; left: 18%; transform: translate(-50%, -50%);">Go Back</button>
 
-			<div id="valravnDivider" class="flex text-left" style="overflow:hidden; opacity: 1;"> <!-- CHANGE BACK TO 0 -->
-				<p class="absolute ibm-plex-mono-regular tracking-wide " style="top: 1395%; left: 70%; transform: translate(-50%, -50%); text-justify: distribute; text-align:start;">
-					<div class="absolute" style="max-width: 500px; overflow: hidden; top: 1455%; left: 80%; transform: translate(-50%, -50%); ">
-						<iframe 
-							src="https://store.steampowered.com/widget/2707670/" 
-							frameborder="0" 
-							width="500" 
-							height="200"
-							style="transform: scale(0.8); transform-origin: top left;">
-						</iframe>
-					</div>
-				</p>
-			</div>		
-			<div id="labratDivider" class="flex text-left" style="overflow:hidden; opacity: 0;"> <!-- CHANGE BACK TO 0 -->
-				<p class="absolute ibm-plex-mono-regular tracking-wide " style="top: 1425%; left: 70%; transform: translate(-50%, -50%); text-justify: distribute; text-align:start;">
-					<div class="absolute" style="max-width: 500px; overflow: hidden; top: 1455%; left: 80%; transform: translate(-50%, -50%); ">
-						<iframe 
-							src="https://store.steampowered.com/widget/1402020/" 
-							frameborder="0" 
-							width="500" 
-							height="200"
-							style="transform: scale(0.8); transform-origin: top left;">
-						</iframe>
-					</div>
-				</p>
-			</div>		
-			
+
+	<div id="valravnDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
+		<div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(-52%, -50%);">
+			<video width="640" height="360" controls>
+				<source src="https://video.cloudflare.steamstatic.com/store_trailers/257004372/movie480_vp9.webm?t=1709159962" type="video/webm">
+				Your browser does not support the video tag.
+			</video>
 		</div>
+	</div>
+
+	<div class="absolute" style="max-width: 600px; overflow: hidden; top: 1650%; left: 13.5%; transform: translate(-50%, -50%); ">
+		<iframe 
+			src="https://store.steampowered.com/widget/2707670/" 
+			frameborder="0" 
+			width="600" 
+			height="200"
+			style="transform: scale(0.8); transform-origin: top left;">
+		</iframe>
+	</div>
+
+	<!-- Game Division -->
+	<div id="labratDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
+		<div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(52%, -50%);">
+			<video width="640" height="360" controls>
+				<source src="https://video.cloudflare.steamstatic.com/store_trailers/256821585/movie480_vp9.webm?t=1671950155" type="video/webm">
+				Your browser does not support the video tag.
+			</video>
+		</div>
+	</div>	
+
+	<div class="absolute" style="max-width: 600px; overflow: hidden; top: 1650%; left: 113.5%; transform: translate(-50%, -50%); ">
+		<iframe 
+			src="https://store.steampowered.com/widget/1402020/" 
+			frameborder="0" 
+			width="600" 
+			height="200"
+			style="transform: scale(0.8); transform-origin: top left;">
+		</iframe>
+	</div>
+</div>
+
 <!-- END PROJECTS SECTION -->
       </div>
     </div>
