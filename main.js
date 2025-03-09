@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sound.setVolume(0.5);
     });
     
+    
     function playMusic(bool) {
         if (bool) {
             if (!sound.isPlaying) {
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectButton = document.getElementById('projectButton');
     projectButton.addEventListener("click", () => {
         gsap.to(camera.position, {
-            y: camera.position.y - 30,
+            y: camera.position.y - 40,
             duration: 4,
             ease: "power2.out" 
         });
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const goBackButtonButton = document.getElementById('goBackButton');
     goBackButtonButton.addEventListener("click", () => {
         gsap.to(camera.position, {
-            y: camera.position.y + 30,
+            y: camera.position.y + 40,
             duration: 4,
             ease: "power2.out" 
         });
