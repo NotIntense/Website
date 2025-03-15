@@ -56,33 +56,72 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     const projectButton = document.getElementById('projectButton');
-    projectButton.addEventListener("click", () => {
-        gsap.to(camera.position, {
-            y: camera.position.y - 40,
-            duration: 4,
-            ease: "power2.out" 
-        });
-    
-        gsap.to("#app", {
-            y: "-=2000", 
-            duration: 4,
-            ease: "power2.out"
-        });
+projectButton.addEventListener("click", () => {
+    if (gsap.isTweening(camera.position) || gsap.isTweening("#app")) return; // Prevent overlap
+
+    gsap.to(camera.position, {
+        y: camera.position.y - 40,
+        duration: 4,
+        ease: "power2.out"
     });
 
-    const goBackButtonButton = document.getElementById('goBackButton');
-    goBackButtonButton.addEventListener("click", () => {
-        gsap.to(camera.position, {
-            y: camera.position.y + 40,
-            duration: 4,
-            ease: "power2.out" 
-        });
-    
-        gsap.to("#app", {
-            y: "+=2000", 
-            duration: 4,
-            ease: "power2.out"
-        });
+    gsap.to("#app", {
+        y: "-=2000",
+        duration: 4,
+        ease: "power2.out"
     });
+});
+
+const goBackButton = document.getElementById('goBackButton');
+goBackButton.addEventListener("click", () => {
+    if (gsap.isTweening(camera.position) || gsap.isTweening("#app")) return;
+
+    gsap.to(camera.position, {
+        y: camera.position.y + 40,
+        duration: 4,
+        ease: "power2.out"
+    });
+
+    gsap.to("#app", {
+        y: "+=2000",
+        duration: 4,
+        ease: "power2.out"
+    });
+});
+
+const autobiographyButton = document.getElementById('autobiographyButton');
+autobiographyButton.addEventListener("click", () => {
+    if (gsap.isTweening(camera.position) || gsap.isTweening("#app")) return;
+
+    gsap.to(camera.position, {
+        y: camera.position.y + 40,
+        duration: 4,
+        ease: "power2.out"
+    });
+
+    gsap.to("#app", {
+        y: "+=2000",
+        duration: 4,
+        ease: "power2.out"
+    });
+});
+
+const goAutoBackButton = document.getElementById('goAutoBackButton');
+goAutoBackButton.addEventListener("click", () => {
+    if (gsap.isTweening(camera.position) || gsap.isTweening("#app")) return;
+
+    gsap.to(camera.position, {
+        y: camera.position.y - 40,
+        duration: 4,
+        ease: "power2.out"
+    });
+
+    gsap.to("#app", {
+        y: "-=2000",
+        duration: 4,
+        ease: "power2.out"
+    });
+});
 });

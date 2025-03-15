@@ -12,8 +12,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> 
+	<link href="/styles.css" rel="stylesheet">
 
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	<link rel="icon" href="Textures/favicon.ico" type="image/x-icon">
@@ -40,9 +39,7 @@
 	  <div class="space-x-7 space-y-3">
         <button
 			id="projectButton" class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">View projects ➔</button>
-        <a 
-		 href="https://threejs.org/docs/#manual/en/introduction/Installation"
-			class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">Autobiography ➔</a>
+        <button	id="autobiographyButton" class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">Autobiography ➔</button>
 <!-- PROJECTS SECTION -->
 <div class="flex justify-center items-center" style="overflow:hidden">
 	<h1 class="absolute ibm-plex-mono-regular text-3xl tracking-wide" style="top: 1300%; left: 50%; transform: translate(-50%, -50%); white-space:nowrap">Games I've have worked on:</h1>
@@ -50,9 +47,10 @@
 	<h1 class="absolute ibm-plex-mono-regular text-2xl tracking-wide" style="top: 1350%; left: 103%; transform: translate(-50%, -50%); white-space:nowrap">SCP: Labrat</h1>
 	
 	<button id="goBackButton" class="absolute text-left text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1650%; left: -76%; transform: translate(0, -50%);">Go Back</button>
+	<button id="goAutoBackButton" class="absolute text-left text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: -600%; left: -76%; transform: translate(0, -50%);">Go Back</button>
 
 
-
+	<!-- Valravn Game Division -->
 	<div id="valravnDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
 		<div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(-52%, -50%);">
 			<video width="640" height="360" controls>
@@ -72,7 +70,7 @@
 		</iframe>
 	</div>
 
-	<!-- Game Division -->
+	<!-- Labrat Game Division -->
 	<div id="labratDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
 		<div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(52%, -50%);">
 			<video width="640" height="360" controls>
@@ -91,6 +89,7 @@
 			style="transform: scale(0.8); transform-origin: top left;">
 		</iframe>
 	</div>
+	<!-- End Game Division -->
 </div>
 
 <!-- END PROJECTS SECTION -->
@@ -109,9 +108,9 @@
   </body>
 
   <script>
-	function onButtonClicked() {
-		const buttonIcon = document.getElementById("volumeIcon");
-  
+	const buttonIcon = document.getElementById("volumeIcon");
+
+	function onButtonClicked() {  
 		if (buttonIcon.classList.contains("fa-volume-xmark")) {
 		  buttonIcon.classList.remove("fa-volume-xmark");
 		  buttonIcon.classList.add("fa-volume-high");
