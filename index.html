@@ -40,9 +40,8 @@
 	  <div class="space-x-7 space-y-3">
         <button
 			id="projectButton" class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">View projects ➔</button>
-        <a 
-		 href="https://threejs.org/docs/#manual/en/introduction/Installation"
-			class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">Autobiography ➔</a>
+        <button 
+			id="autobiographyButton" class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">Autobiography ➔</button>
 <!-- PROJECTS SECTION -->
 <div class="flex justify-center items-center" style="overflow:hidden">
 	<h1 class="absolute ibm-plex-mono-regular text-3xl tracking-wide" style="top: 1300%; left: 50%; transform: translate(-50%, -50%); white-space:nowrap">Games I've have worked on:</h1>
@@ -55,7 +54,7 @@
 
 	<div id="valravnDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
 		<div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(-52%, -50%);">
-			<video width="640" height="360" controls>
+			<video id="valravnVideo" width="640" height="360" controls>
 				<source src="https://video.cloudflare.steamstatic.com/store_trailers/257004372/movie480_vp9.webm?t=1709159962" type="video/webm">
 				Your browser does not support the video tag.
 			</video>
@@ -75,7 +74,7 @@
 	<!-- Game Division -->
 	<div id="labratDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
 		<div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(52%, -50%);">
-			<video width="640" height="360" controls>
+			<video id="labratVideo" width="640" height="360" controls>
 				<source src="https://video.cloudflare.steamstatic.com/store_trailers/256821585/movie480_vp9.webm?t=1671950155" type="video/webm">
 				Your browser does not support the video tag.
 			</video>
