@@ -1,5 +1,3 @@
-import * as THREE from 'three';
-
 export function createStarfield(scene, renderer, camera) {
     const numStars = 10000; 
     const starGeometry = new THREE.BufferGeometry();
