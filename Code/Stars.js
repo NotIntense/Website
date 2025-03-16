@@ -1,3 +1,5 @@
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
+
 export function createStarfield(scene, renderer, camera) {
     const numStars = 10000; 
     const starGeometry = new THREE.BufferGeometry();
