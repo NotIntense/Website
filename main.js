@@ -1,6 +1,5 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
 import { createStarfield } from '/Code/Stars.js';
-import gsap from "gsap";
 
 document.addEventListener('DOMContentLoaded', () => {
     const scene = new THREE.Scene();
