@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const projectButton = document.getElementById('projectButton');
     projectButton.addEventListener("click", () => {
-    if (gsap.isTweening(camera.position) || gsap.isTweening("#app")) return; // Prevent overlap
+    if (gsap.isTweening(camera.position) || gsap.isTweening("#app")) return; 
 
     gsap.to(camera.position, {
         y: camera.position.y - 40,
