@@ -28,6 +28,19 @@
         font-weight: 400;
         font-style: normal;
       }
+
+      .custom-scroll {
+      ::-webkit-scrollbar {
+      display: none;
+      scroll-behavior: smooth;
+      padding-top: 40px;
+    }
+
+    .leading-relaxed {
+    line-height: 1.75; 
+    }
+    scrollbar-width: none;
+  }
     </style>
   </head>
   <body class="flex justify-center items-center" style="overflow:hidden">
@@ -94,6 +107,70 @@
           </div>
         </div>
         <!-- END PROJECTS SECTION -->
+        <!-- ABOUT ME SECTION -->
+        <div id="aboutMeSection" class="absolute text-center text-white w-full flex justify-center items-center" style="top: -1400%; left: 50%; transform: translate(-50%, -50%); opacity: 1; overflow: hidden;">
+          <div class="flex justify-between items-start w-full mx-auto mt-8 gap-16">
+            <!-- Left Box (Profile) -->
+            <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-[30%] max-h-[400px] flex flex-col items-center">
+              <img src="Textures/image.jpg" alt="Profile Picture" class="w-36 h-36 rounded-full border-4 border-white">
+              <h2 class="ibm-plex-mono-regular text-3xl mt-4">NotIntense</h2>
+              <div class="flex space-x-5 mt-4">
+                <a href="https://github.com/NotIntense" target="_blank" class="text-white text-3xl"><i class="fa-brands fa-github"></i></a>
+              </div>
+            </div>
+          
+            <!-- Right Box (About Me) -->
+            <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-h-[400px] text-left"> 
+              <h1 class="ibm-plex-mono-regular text-4xl tracking-wide">About Me</h1>
+              <p class="font-exo text-2xl mt-4">Working on code since 2020 with C# and JavaScript. Game & Software Developer.</p>
+              <button id="goAutoBackButton" class="border px-5 py-2 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 mt-4">
+                Go Back
+              </button>
+            </div>
+        </div>         
+      </div>
+
+      <div id="quoteSection" class="absolute text-center text-white w-full flex justify-center items-center" style="top: -1200%; left: 12%; transform: translate(-50%, -50%); opacity: 1; overflow: hidden;">
+        <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-[30%] max-h-[400px] flex flex-col items-center">
+          <div class="overflow-y-auto max-h-36 text-xl font-exo text-gray-400 w-full custom-scroll">
+            <p class="text-white text-xl leading-relaxed">
+             "Do not go gentle into that good night,
+              Old age should burn and rave at close of day;
+              Rage, rage against the dying of the light.
+
+              Though wise men at their end know dark is right,
+              Because their words had forked no lightning they
+              Do not go gentle into that good night.
+
+              Good men, the last wave by, crying how bright
+              Their frail deeds might have danced in a green bay,
+              Rage, rage against the dying of the light.
+
+              Wild men who caught and sang the sun in flight,
+              And learn, too late, they grieved it on its way,
+              Do not go gentle into that good night.
+
+              Grave men, near death, who see with blinding sight
+              Blind eyes could blaze like meteors and be gay,
+              Rage, rage against the dying of the light.
+
+              And you, my father, there on the sad height,
+              Curse, bless, me now with your fierce tears, I pray.
+              Do not go gentle into that good night.
+              Rage, rage against the dying of the light."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="spotifySection" class="absolute text-center text-white w-full flex justify-center items-center" style="top: -1200%; left: 90%; transform: translate(-50%, -50%); opacity: 1; overflow: hidden;">
+        <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-[30%] max-h-[400px] flex flex-col items-center">
+          <div class="overflow-y-auto max-h-36 text-xl font-exo text-gray-400 w-full custom-scroll">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vSlIeLQxLnmSMGO8VggwM?utm_source=generator" width="100%" height="150" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+
       </div>
     </div>
     <div class="absolute text-center text-white" style="top: 95%; left: 98%; transform: translate(-50%, -50%);">
