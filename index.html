@@ -1,201 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <!-- Add responsive viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotIntense | Portfolio</title>
-    <script type="module" src="./main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="icon" href="Textures/favicon.ico" type="image/x-icon">
-    <style>
-      body { margin: 0; }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotIntense | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body { margin: 0; overflow: hidden; }
+    .font-exo { font-family: "Jersey 25", sans-serif; }
+    .ibm-plex-mono-regular { font-family: "IBM Plex Mono", monospace; font-weight: 400; }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-black text-white">
+  <canvas id="bgCanvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
 
-      .font-exo {
-        font-family: "Jersey 25", sans-serif;
-      }
+  <div class="relative z-10 p-8 bg-gray-900 bg-opacity-90 rounded-xl shadow-lg max-w-xl text-center">
+    <img src="Textures\image.jpg" alt="Profile Picture" class="w-32 h-32 mx-auto rounded-full border-4 border-white mb-4">
+    <h1 class="ibm-plex-mono-regular text-3xl">NotIntense</h1>
+    <p class="font-exo text-xl mt-2">Self-Taught Software Developer</p>
+    <p class="mt-4 text-lg text-gray-300">
+      Working on code since 2020 with C#, C++ and JavaScript.<br>
+      Game & Software Developer.<br>
+      Developer for 
+      <strong><a href="https://store.steampowered.com/app/1402020/SCP_Labrat/" class="text-blue-400 hover:underline" target="_blank">SCP: Labrat</a></strong> 
+      and 
+      <strong><a href="https://store.steampowered.com/app/2707670/SCP_Valravn/" class="text-blue-400 hover:underline" target="_blank">SCP: Valravn</a></strong>.
+    </p>    
+    
 
-      .ibm-plex-mono-regular {
-        font-family: "IBM Plex Mono", monospace;
-        font-weight: 400;
-        font-style: normal;
-      }
+    <blockquote class="italic text-gray-400 mt-6">
+      “Do not go gentle into that good night.” — Dylan Thomas
+    </blockquote>
 
-      .custom-scroll {
-      ::-webkit-scrollbar {
-      display: none;
-      scroll-behavior: smooth;
-      padding-top: 40px;
-    }
-
-    .leading-relaxed {
-    line-height: 1.75; 
-    }
-    scrollbar-width: none;
-  }
-    </style>
-  </head>
-  <body class="flex justify-center items-center" style="overflow:hidden">
-    <div id="app" class="absolute text-center text-white" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-      <h1 class="ibm-plex-mono-regular text-4xl tracking-wide">NotIntense</h1>
-      <p class="font-exo text-5xl">Self-Taught Software Developer</p>
-      <div class="space-x-7 space-y-3">
-        <button id="projectButton" class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">
-          View projects ➔
-        </button>
-        <button id="autobiographyButton" class="border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block">
-          About ➔
-        </button>
-        <!-- PROJECTS SECTION -->
-        <div class="flex justify-center items-center" style="overflow:hidden">
-          <h1 class="absolute ibm-plex-mono-regular text-3xl tracking-wide" style="top: 1300%; left: 50%; transform: translate(-50%, -50%); white-space:nowrap">
-            Games I've have worked on:
-          </h1>
-          <h1 class="absolute ibm-plex-mono-regular text-2xl tracking-wide" style="top: 1350%; left: 10%; transform: translate(-50%, -50%); white-space:nowrap">
-            SCP: Valravn
-          </h1>
-          <h1 class="absolute ibm-plex-mono-regular text-2xl tracking-wide" style="top: 1350%; left: 103%; transform: translate(-50%, -50%); white-space:nowrap">
-            SCP: Labrat
-          </h1>
-          <button id="goBackButton" class="absolute text-left text-white border px-2 py-1 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 inline-block" style="top: 1650%; left: -76%; transform: translate(0, -50%);">
-            Go Back
-          </button>
-          <div id="valravnDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
-            <div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(-52%, -50%);">
-              <video id="valravnVideo" width="640" height="360" controls>
-                <source src="https://video.cloudflare.steamstatic.com/store_trailers/257004372/movie480_vp9.webm?t=1709159962" type="video/webm">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>
-          <!-- Steam Widget for SCP: Valravn -->
-          <div class="absolute" style="max-width: 600px; overflow: hidden; top: 1650%; left: 13.5%; transform: translate(-50%, -50%);">
-            <iframe 
-              src="https://store.steampowered.com/widget/2707670/" 
-              frameborder="0" 
-              width="600" 
-              height="200"
-              style="transform: scale(0.8); transform-origin: top left;">
-            </iframe>
-          </div>
-          <!-- Game Division -->
-          <div id="labratDivider" class="flex text-left justify-center items-center" style="overflow:hidden; opacity: 1;">
-            <div class="flex absolute" style="overflow: hidden; top: 1480%; left: 4%; transform: translate(52%, -50%);">
-              <video id="labratVideo" width="640" height="360" controls>
-                <source src="https://video.cloudflare.steamstatic.com/store_trailers/256821585/movie480_vp9.webm?t=1671950155" type="video/webm">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>	
-          <!-- Steam Widget for SCP: Labrat -->
-          <div class="absolute" style="max-width: 600px; overflow: hidden; top: 1650%; left: 113.5%; transform: translate(-50%, -50%);">
-            <iframe 
-              src="https://store.steampowered.com/widget/1402020/" 
-              frameborder="0" 
-              width="600" 
-              height="200"
-              style="transform: scale(0.8); transform-origin: top left;">
-            </iframe>
-          </div>
-        </div>
-        <!-- END PROJECTS SECTION -->
-        <!-- ABOUT ME SECTION -->
-        <div id="aboutMeSection" class="absolute text-center text-white w-full flex justify-center items-center" style="top: -1400%; left: 50%; transform: translate(-50%, -50%); opacity: 1; overflow: hidden;">
-          <div class="flex justify-between items-start w-full mx-auto mt-8 gap-16">
-            <!-- Left Box (Profile) -->
-            <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-[30%] max-h-[400px] flex flex-col items-center">
-              <img src="Textures/image.jpg" alt="Profile Picture" class="w-36 h-36 rounded-full border-4 border-white">
-              <h2 class="ibm-plex-mono-regular text-3xl mt-4">NotIntense</h2>
-              <div class="flex space-x-5 mt-4">
-                <a href="https://github.com/NotIntense" target="_blank" class="text-white text-3xl"><i class="fa-brands fa-github"></i></a>
-                <a href="mailto:contact@notintense.com" class="text-white text-3xl"><i class="fa-solid fa-envelope"></i></a>
-              </div>
-            </div>
-          
-            <!-- Right Box (About Me) -->
-            <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-full max-h-[400px] text-left"> 
-              <h1 class="ibm-plex-mono-regular text-4xl tracking-wide">About Me</h1>
-              <p class="font-exo text-2xl mt-4">Working on code since 2020 with C# and JavaScript. Game & Software Developer.</p>
-              <button id="goAutoBackButton" class="border px-5 py-2 ibm-plex-mono-regular hover:bg-white hover:text-gray-800 mt-4">
-                Go Back
-              </button>
-            </div>
-        </div>         
-      </div>
-
-      <div id="quoteSection" class="absolute text-center text-white w-full flex justify-center items-center" style="top: -1200%; left: 12%; transform: translate(-50%, -50%); opacity: 1; overflow: hidden;">
-        <div class="bg-gray-900 p-6 rounded-xl shadow-lg w-[30%] max-h-[400px] flex flex-col items-center">
-          <div class="overflow-y-auto max-h-36 text-xl font-exo text-gray-400 w-full custom-scroll">
-            <p class="text-white text-xl leading-relaxed">
-             "Do not go gentle into that good night,
-              Old age should burn and rave at close of day;
-              Rage, rage against the dying of the light.
-
-              Though wise men at their end know dark is right,
-              Because their words had forked no lightning they
-              Do not go gentle into that good night.
-
-              Good men, the last wave by, crying how bright
-              Their frail deeds might have danced in a green bay,
-              Rage, rage against the dying of the light.
-
-              Wild men who caught and sang the sun in flight,
-              And learn, too late, they grieved it on its way,
-              Do not go gentle into that good night.
-
-              Grave men, near death, who see with blinding sight
-              Blind eyes could blaze like meteors and be gay,
-              Rage, rage against the dying of the light.
-
-              And you, my father, there on the sad height,
-              Curse, bless, me now with your fierce tears, I pray.
-              Do not go gentle into that good night.
-              Rage, rage against the dying of the light."
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div id="spotifySection" class="absolute text-center text-white w-full flex justify-center items-center" style="top: -1200%; left: 91%; transform: translate(-50%, -50%); opacity: 1; overflow: visible;">
-        <div class="bg-gray-900 p-5 rounded-xl shadow-lg w-[30%] max-h-[380px] flex flex-col items-center">
-          <div class="w-full custom-scroll">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vSlIeLQxLnmSMGO8VggwM?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-          </div>
-        </div>
-      </div>
-
-      </div>
+    <div class="flex justify-center space-x-6 mt-6 text-2xl">
+      <a href="https://github.com/NotIntense" target="_blank" class="hover:text-gray-400"><i class="fab fa-github"></i></a>
+      <a href="mailto:contact@notintense.com" class="hover:text-gray-400"><i class="fas fa-envelope"></i></a>
     </div>
-    <div class="absolute text-center text-white" style="top: 95%; left: 98%; transform: translate(-50%, -50%);">
-      <button id="volumeMuteButton" onclick="onButtonClicked()">
-        <i id="volumeIcon" class="fa-solid fa-volume-xmark"></i>
-      </button>
-    </div>	  
-    <div class="absolute text-center" style="top: 90%; left: 98%; transform: translate(-50%, -50%);">
-      <a href="https://github.com/NotIntense" target="_blank" class="text-white">
-        <i class="fa-brands fa-github"></i>
-      </a>
-    </div>
-  </body>
-  <script>
-    const buttonIcon = document.getElementById("volumeIcon");
 
-    function onButtonClicked() {  
-      if (buttonIcon.classList.contains("fa-volume-xmark")) {
-        buttonIcon.classList.remove("fa-volume-xmark");
-        buttonIcon.classList.add("fa-volume-high");
+    <button id="toggleMusic" class="mt-6 text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-black transition">
+      ▸ Show Music
+    </button>
+
+    <div id="musicSection" class="mt-6 hidden">
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vSlIeLQxLnmSMGO8VggwM?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
+    import { createStarfield } from '/Code/Stars.js';
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    const animate = createStarfield(scene, renderer, camera);
+    renderer.setAnimationLoop(animate);
+
+    document.getElementById('toggleMusic').addEventListener('click', () => {
+      const section = document.getElementById('musicSection');
+      const button = document.getElementById('toggleMusic');
+      if (section.classList.contains('hidden')) {
+        section.classList.remove('hidden');
+        button.textContent = '▾ Hide Music';
       } else {
-        buttonIcon.classList.remove("fa-volume-high");
-        buttonIcon.classList.add("fa-volume-xmark");
+        section.classList.add('hidden');
+        button.textContent = '▸ Show Music';
       }
-    };
+    });
   </script>
+</body>
 </html>
