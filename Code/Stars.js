@@ -1,4 +1,4 @@
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
+import * as THREE from "./External/three.module.js";
 
 export function createStarfield(scene, renderer, camera) {
     const numStars = 15000;
@@ -17,7 +17,7 @@ export function createStarfield(scene, renderer, camera) {
     for (let i = 0; i < numStars; i++) {
         const theta = Math.random() * 2 * Math.PI;
         const phi = Math.acos(2 * Math.random() - 1);
-        const r = radius * Math.pow(Math.random(), 0.5); // denser center
+        const r = radius * Math.pow(Math.random(), 0.5); 
         const x = r * Math.sin(phi) * Math.cos(theta);
         const y = r * Math.sin(phi) * Math.sin(theta);
         const z = r * Math.cos(phi);
@@ -25,8 +25,8 @@ export function createStarfield(scene, renderer, camera) {
         positions[i * 3] = x;
         positions[i * 3 + 1] = y;
         positions[i * 3 + 2] = z;
-        
-        sizes[i] = Math.random() * 0.3 + 0.1;  
+
+        sizes[i] = Math.random() * 0.3 + 0.1; 
         const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
         colors[i * 3] = color.r;
         colors[i * 3 + 1] = color.g;
@@ -55,7 +55,7 @@ export function createStarfield(scene, renderer, camera) {
             void main() {
                 vColor = color;
                 vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                gl_PointSize = size * 1.5 * (300.0 / -mvPosition.z);  // Scaling point size with depth
+                gl_PointSize = size * 1.5;
                 gl_Position = projectionMatrix * mvPosition;
             }
         `,
@@ -65,7 +65,11 @@ export function createStarfield(scene, renderer, camera) {
             void main() {
                 float dist = distance(gl_PointCoord, vec2(0.5));
                 float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
-                gl_FragColor = vec4(vColor, alpha);  // No flickering, just the base color and alpha
+                
+                float flicker = 0.9 + 0.1 * sin(time + gl_FragCoord.x * 0.1 + gl_FragCoord.y * 0.1);
+                alpha *= flicker;  // Applying flicker to alpha
+                
+                gl_FragColor = vec4(vColor, alpha); // Smooth fade effect
             }
         `
     });
