@@ -179,6 +179,7 @@
     </div>
   </div>
   <script type="module">
+    if (navigator.userAgent.includes("Nintendo 3DS")) { window.location.href = "/3ds"; }
     import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
     import { createStarfield } from '/Code/Stars.js';
     const scene = new THREE.Scene();
