@@ -1,7 +1,4 @@
-import * as THREE from 'three'
-import noisejs from 'noisejs';
-const Noise = noisejs.Noise;
-
+import * as THREE from './modules/three.module.js';
 
 const maxDis = 50;
 const gridSize = 3;
