@@ -96,6 +96,9 @@ const statusEl = document.getElementById('site-status');
   if (statusText && statusText.trim() !== "") {
     statusEl.textContent = statusText;
     statusEl.style.display = "block";
+    requestAnimationFrame(() => {
+        document.body.style.paddingTop = `calc(${statusEl.offsetHeight}px + env(safe-area-inset-top))`;
+    });
   } else {
     statusEl.style.display = "none";
     document.body.style.paddingTop = "0";
