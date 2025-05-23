@@ -91,7 +91,7 @@ window.addEventListener('resize', () => {
 });
 
 const statusEl = document.getElementById('site-status');
-  const statusText = "Currently re-doing my website~ Enjoy the waves and music fo now uwu";
+  const statusText = "Currently re-doing my website~ Enjoy the waves and music for now uwu";
 
   if (statusText && statusText.trim() !== "") {
     statusEl.textContent = statusText;
