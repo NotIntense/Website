@@ -1,0 +1,106 @@
+import * as THREE from 'three'
+import noisejs from 'noisejs';
+const Noise = noisejs.Noise;
+
+
+const maxDis = 50;
+const gridSize = 3;
+const step = 0.3;
+
+const scene = new THREE.Scene();
+const noise = new Noise(Math.random());
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(-10, 15, 15);
+camera.lookAt(-10, -15, 0);
+
+const renderer = new THREE.WebGLRenderer({
+    canvas: document.querySelector('#bg'),
+});
+
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const pointLight = new THREE.PointLight(0xffffff, 1000);
+pointLight.position.set(10, 10, 10);
+
+scene.add(pointLight);
+
+//const controls = new OrbitControls(camera, renderer.domElement);
+
+function getPerlinVec(x, y, z, frame = 0)
+{
+    let max = maxDis / gridSize;
+    return [x, y ,z].map((c) => (noise.perlin2(c / max, frame) * step));
+}
+
+function getGridPosition(x, y, z) {
+    return [x, y ,z].map((c) => (c / gridSize));
+}
+
+let particles = [];
+for(let x = -maxDis; x < maxDis; x++) {
+    let pGroup = [];
+    for(let z = -maxDis; z < maxDis; z++) {
+        const geometry = new THREE.SphereGeometry(0.04, 24, 24);
+        const material = new THREE.MeshStandardMaterial( {color: 0xffffff } );
+        const p = new THREE.Mesh(geometry, material);
+
+        p.position.set(x, 0, z);
+        scene.add(p);
+
+        pGroup.push(p);
+    }
+    particles.push(pGroup);
+}
+
+let frame = 0;
+let originalCameraPos = camera.position.clone();
+let targetOffset = new THREE.Vector3();
+
+let mouse = { x: 0, y: 0 };
+
+window.addEventListener('mousemove', (ev) => {
+    mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
+});
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    //controls.update();
+
+    particles.forEach((pGroup, i) => {
+        pGroup.forEach((p, j) => {
+            p.position.y = Math.sin(Math.sqrt((p.position.x + maxDis) ** 2 + (p.position.z + maxDis) ** 2) / 3 + frame) * 2;
+        });
+    });
+
+    const maxSway = 0.5;
+    const targetOffset = new THREE.Vector3(mouse.x * maxSway, mouse.y * maxSway, 0);
+    const targetPos = originalCameraPos.clone().add(targetOffset);
+    camera.position.lerp(targetPos, 0.1);
+
+    frame += 0.02;
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+const statusEl = document.getElementById('site-status');
+  const statusText = "Currently re-doing my website~ Enjoy the waves and music fo now uwu";
+
+  if (statusText && statusText.trim() !== "") {
+    statusEl.textContent = statusText;
+    statusEl.style.display = "block";
+  } else {
+    statusEl.style.display = "none";
+    document.body.style.paddingTop = "0";
+  }
+
