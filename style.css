@@ -174,4 +174,7 @@ a, a:visited, a:active {
   #spotify-container {
     display: none;
   }
+  #toggle-ui {
+    display: none;
+  }
 }
