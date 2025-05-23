@@ -8,14 +8,15 @@ body{
     margin: 0;
     color:#224;
 }
-.profileContainer{
+.profileContainer {
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100dvh - var(--site-status-height, 36px) - env(safe-area-inset-top));
     flex-wrap: wrap;
     position: relative;
     gap: 20px;
     justify-content: center;
     align-items: center;
+    padding-top: calc(var(--site-status-height, 36px) + env(safe-area-inset-top));
 }
 .card {
   position: relative;

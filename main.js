@@ -93,14 +93,13 @@ window.addEventListener('resize', () => {
 const statusEl = document.getElementById('site-status');
   const statusText = "New updated website! More plans to come but I hope y'all like it :3";
 
-  if (statusText && statusText.trim() !== "") {
-    statusEl.textContent = statusText;
-    statusEl.style.display = "block";
-    requestAnimationFrame(() => {
-        document.body.style.paddingTop = `calc(${statusEl.offsetHeight}px + env(safe-area-inset-top))`;
-    });
-  } else {
-    statusEl.style.display = "none";
-    document.body.style.paddingTop = "0";
-  }
-
+if (statusText && statusText.trim() !== "") {
+  statusEl.textContent = statusText;
+  statusEl.style.display = "block";
+  requestAnimationFrame(() => {
+    document.documentElement.style.setProperty('--site-status-height', `${statusEl.offsetHeight}px`);
+  });
+} else {
+  statusEl.style.display = "none";
+  document.documentElement.style.setProperty('--site-status-height', `0px`);
+}
