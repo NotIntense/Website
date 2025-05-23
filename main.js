@@ -91,7 +91,7 @@ window.addEventListener('resize', () => {
 });
 
 const statusEl = document.getElementById('site-status');
-  const statusText = "New updated website! More plans to come but I hope y'all like it :3";
+const statusText = "New updated website! More plans to come but I hope y'all like it :3";
 
 if (statusText && statusText.trim() !== "") {
   statusEl.textContent = statusText;
@@ -99,7 +99,25 @@ if (statusText && statusText.trim() !== "") {
   requestAnimationFrame(() => {
     document.documentElement.style.setProperty('--site-status-height', `${statusEl.offsetHeight}px`);
   });
-} else {
+} 
+else {
   statusEl.style.display = "none";
   document.documentElement.style.setProperty('--site-status-height', `0px`);
 }
+
+const toggleBtn = document.getElementById("toggle-ui");
+const uiContainer = document.querySelector(".profileContainer");
+const icon = toggleBtn.querySelector("i");
+
+let uiVisible = true;
+toggleBtn.addEventListener("click", () => {
+  uiVisible = !uiVisible;
+  uiContainer.style.display = uiVisible ? "flex" : "none";
+  if (uiVisible) {
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  } else {
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  }
+});
