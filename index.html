@@ -2,206 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="Textures\favico.ico">
   <title>NotIntense | Developer Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    .pixel-font {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 1.7rem;
-      letter-spacing: -1px;
-      line-height: 1.1;
-    }
-    .bg-gray-900 {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      max-height: 100vh;
-      overflow: hidden;
-    }
-    #projects {
-      max-height: 60vh;
-      overflow-y: auto;
-    }
-    .tab {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      position: absolute;
+    canvas {
+      position: fixed;
+      top: 0;
       left: 0;
-      right: 0;
-      visibility: hidden;
     }
-    .tab.active {
-      opacity: 1;
-      transform: translateY(0);
-      visibility: visible;
-      position: static;
+
+    #spotify-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(10, 10, 10, 0.8);
+    padding: 10px;
+    border-radius: 16px;
+    z-index: 999;
+    transition: transform 0.3s ease;
     }
-    .tab-btn.active {
-      background: white;
-      color: black;
+
+    #spotify-container:hover {
+    transform: scale(1.05);
     }
-    #music .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      align-items: start;
+
+    #site-status {
+    width: 100%;
+    background: rgba(0, 255, 255, 0.1);
+    color: #fff;
+    text-align: center;
+    padding: 8px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
     }
-    .lyrics-box {
-      max-height: 152px;
-      overflow-y: auto;
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 12px;
-      border-radius: 0.75rem;
-      font-family: 'Arial', sans-serif;
-      font-size: 0.875rem;
-      color: #D1D5DB;
-      line-height: 1.6;
-      margin: 0;
+    body {
+    padding-top: 36px; 
     }
-    iframe {
-      border-radius: 12px;
-    }
-    .project-image {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      max-width: 100%;
-      max-height: 180px;
-      border-radius: 8px;
-    }
-    .project-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .project-card:hover {
-     transform: translateY(-4px) scale(1.02);
-     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    }
+
+
+
   </style>
 </head>
-<body class="bg-black text-white">
-  <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full z-0"></canvas>
-  <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
-    <div class="bg-gray-900 bg-opacity-90 rounded-xl p-6 max-w-3xl w-full shadow-lg text-center">
-      <img src="Textures/image.jpg" alt="Profile" class="w-32 h-32 mx-auto rounded-full border-4 border-white mb-4 transform transition duration-300 hover:scale-105">
-      <h1 class="ibm-plex-mono-regular text-4xl pixel-font">Willow / NotIntense</h1>
-      <p class="font-exo text-xl mt-2">Self-Taught Game & Software Developer</p>
-      <p class="text-gray-300 mt-2">Working on code since 2020 — Unity & Godot</p>
-      <p class="text-sm mt-1">
-        Developer for 
-        <a class="text-blue-400 hover:text-blue-300 transition duration-300" href="https://store.steampowered.com/app/1402020/SCP_Labrat/" target="_blank">SCP: Labrat</a> & 
-        <a class="text-blue-400 hover:text-blue-300 transition duration-300" href="https://store.steampowered.com/app/2707670/SCP_Valravn/" target="_blank">SCP: Valravn</a>
-      </p>
-      <div class="mt-4 flex justify-center space-x-4 text-xl">
-        <a href="https://github.com/NotIntense" target="_blank" class="hover:text-gray-400 transition duration-300"><i class="fab fa-github"></i></a>
-        <a href="mailto:contact@notintense.com" class="hover:text-gray-400 transition duration-300"><i class="fas fa-envelope"></i></a>
-      </div>
-      <blockquote class="italic text-gray-400 mt-6">
-        “Do not go gentle into that good night.” — Dylan Thomas
-      </blockquote>
-      <div class="mt-6 flex justify-center space-x-2">
-        <button onclick="showTab('about')" class="tab-btn px-4 py-1 border border-white rounded active transition duration-300 ease-in-out hover:bg-white hover:text-black">About</button>
-        <button onclick="showTab('projects')" class="tab-btn px-4 py-1 border border-white rounded transition duration-300 ease-in-out hover:bg-white hover:text-black">Projects</button>
-        <button onclick="showTab('music')" class="tab-btn px-4 py-1 border border-white rounded transition duration-300 ease-in-out hover:bg-white hover:text-black">Music</button>
-        <button onclick="showTab('contact')" class="tab-btn px-4 py-1 border border-white rounded transition duration-300 ease-in-out hover:bg-white hover:text-black">Contact</button>
-      </div>
-      <div id="about" class="tab active mt-6">
-        <p class="text-gray-300">"What makes this fragile world go 'round?"</p>
-      </div>
-      <div id="projects" class="tab mt-6">
-  <div class="grid gap-4 md:grid-cols-2 text-left">
-    
-    <div class="bg-gray-800 p-4 rounded-lg flex flex-col h-full transform transition-transform duration-300 ease-out hover:scale-100 hover:shadow-xl">
-      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1402020/header.jpg" alt="SCP: Labrat" class="rounded mb-3 project-image">
-      <h2 class="text-xl font-bold">SCP: Labrat</h2>
-      <p class="flex-grow">You are a test subject in the underground SCP research facility.</p>
-      <a href="https://store.steampowered.com/app/1402020/SCP_Labrat/" target="_blank" class="mt-2 text-blue-400 hover:text-blue-300 transition duration-300">View on Steam</a>
-    </div>
+<body>
+  <canvas id="bg"></canvas>
+  <script type="module" src="main.js"></script>
+  <div id="site-status"></div>
+  <div id="spotify-container">
+  <iframe 
+  src="https://open.spotify.com/embed/playlist/2YzzQRodRYU0XtuRvcSTFO?utm_source=generator&theme=0" 
+  width="340" height="152" frameborder="0" allowfullscreen
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy"
+  style="border: none; border-radius: 12px;">
+</iframe>
 
-    <div class="bg-gray-800 p-4 rounded-lg flex flex-col h-full transform transition-transform duration-300 ease-out hover:scale-100 hover:shadow-xl">
-      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2707670/header.jpg" alt="SCP: Valravn" class="rounded mb-3 project-image">
-      <h2 class="text-xl font-bold">SCP: Valravn</h2>
-      <p class="flex-grow">You never lose a war, when war is what you sell.</p>
-      <a href="https://store.steampowered.com/app/2707670/SCP_Valravn/" target="_blank" class="mt-2 text-blue-400 hover:text-blue-300 transition duration-300">View on Steam</a>
-    </div>
-
-    <div class="bg-gray-800 p-4 rounded-lg flex flex-col h-full transform transition-transform duration-300 ease-out hover:scale-100 hover:shadow-xl">
-      <img src="https://user-content.gitlab-static.net/2830fcb44aed0aac41732cc668ff2edea4d13391/68747470733a2f2f6769746875622e636f6d2f757365722d6174746163686d656e74732f6173736574732f35656139353939322d326165622d343763332d626432392d633936363238353237366530" alt="EXILED" class="rounded mb-3 project-image">
-      <h2 class="text-xl font-bold">EXILED</h2>
-      <p class="flex-grow">A high-level plugin framework for SCP: Secret Laboratory servers.</p>
-      <a href="https://gitlab.com/exmod-team/EXILED" target="_blank" class="mt-2 text-blue-400 hover:text-blue-300 transition duration-300">View on GitLab</a>
-    </div>
-
-  </div>
 </div>
 
-      <div id="music" class="tab mt-6">
-        <div class="grid md:grid-cols-2 gap-4">
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vSlIeLQxLnmSMGO8VggwM?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-          <div class="lyrics-box text-left text-sm text-gray-300">
-            <p>Do not go gentle into that good night,</p>
-            <p>Old age should burn and rave at close of day;</p>
-            <p>Rage, rage against the dying of the light.</p>
-            <p>Though wise men at their end know dark is right,</p>
-            <p>Because their words had forked no lightning they</p>
-            <p>Do not go gentle into that good night.</p>
-            <p>Good men, the last wave by, crying how bright</p>
-            <p>Their frail deeds might have danced in a green bay,</p>
-            <p>Rage, rage against the dying of the light.</p>
-            <p>Wild men who caught and sang the sun in flight,</p>
-            <p>And learn, too late, they grieved it on its way,</p>
-            <p>Do not go gentle into that good night.</p>
-            <p>Grave men, near death, who see with blinding sight</p>
-            <p>Blind eyes could blaze like meteors and be gay,</p>
-            <p>Rage, rage against the dying of the light.</p>
-            <p>And you, my father, there on the sad height,</p>
-            <p>Curse, bless, me now with your fierce tears, I pray.</p>
-            <p>Do not go gentle into that good night.</p>
-            <p>Rage, rage against the dying of the light.</p>
-          </div>
-        </div>
-      </div>
-      <div id="contact" class="tab mt-6">
-        <p>Wanna reach out?</p>
-        <p>Email me at <a href="mailto:contact@notintense.com" class="text-blue-400 hover:text-blue-300 transition duration-300">contact@notintense.com</a></p>
-      </div>
-    </div>
-  </div>
-  <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
-    import { createStarfield } from '/Code/Stars.js';
-    
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-    const animate = createStarfield(scene, renderer, camera);
-    renderer.setAnimationLoop(animate);
-    const tabs = document.querySelectorAll('.tab');
-    const buttons = document.querySelectorAll('.tab-btn');
-    window.showTab = (id) => {
-      tabs.forEach(tab => tab.classList.remove('active'));
-      buttons.forEach(btn => btn.classList.remove('active'));
-      const target = document.getElementById(id);
-      target.classList.add('active');
-      event.target.classList.add('active');
-    };
-  </script>
 </body>
 </html>
