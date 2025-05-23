@@ -8,8 +8,8 @@ const scene = new THREE.Scene();
 const noise = new Noise(Math.random());
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(-10, 15, 15);
-camera.lookAt(-10, -15, 0);
+camera.lookAt(0, -10, 0);
+camera.position.set(0, 25, 0);
 
 const renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('#bg'),
@@ -91,7 +91,7 @@ window.addEventListener('resize', () => {
 });
 
 const statusEl = document.getElementById('site-status');
-  const statusText = "Currently re-doing my website~ Enjoy the waves and music for now uwu";
+  const statusText = "New updated website! More plans to come but I hope y'all like it :3";
 
   if (statusText && statusText.trim() !== "") {
     statusEl.textContent = statusText;

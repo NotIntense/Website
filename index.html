@@ -4,6 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="Textures\favico.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="./style.css" rel="stylesheet">
   <title>NotIntense | Developer Portfolio</title>
 
   <style>
@@ -11,63 +13,65 @@
       position: fixed;
       top: 0;
       left: 0;
+      z-index: 0;
     }
 
     #spotify-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(10, 10, 10, 0.8);
-    padding: 10px;
-    border-radius: 16px;
-    z-index: 999;
-    transition: transform 0.3s ease;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(10, 10, 10, 0.8);
+      padding: 10px;
+      border-radius: 16px;
+      z-index: 999;
+      transition: transform 0.3s ease;
     }
 
     #spotify-container:hover {
-    transform: scale(1.05);
+      transform: scale(1.05);
     }
 
     #site-status {
-    width: 100%;
-    background: rgba(0, 255, 255, 0.1);
-    color: #fff;
-    text-align: center;
-    padding: 8px 0;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-    backdrop-filter: blur(8px);
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
+      width: 100%;
+      background: rgba(0, 255, 255, 0.1);
+      color: #fff;
+      text-align: center;
+      padding: 8px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      position: fixed;
+      top: 0;
+      left: 0;
     }
     body {
-    padding-top: 36px; 
+      padding-top: 36px; 
     }
     .container {
-    padding-bottom: env(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: #000;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
     }
 
-  body {
-    min-height: 100svh;
-    padding-top: env(safe-area-inset-top);
-    padding-right: env(safe-area-inset-right);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    box-sizing: border-box;
+    body {
+      min-height: 100svh;
+      padding-top: env(safe-area-inset-top);
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      box-sizing: border-box;
     }
 
-
-
+    .profileContainer {
+      position: relative;
+    }
 
   </style>
 </head>
@@ -76,16 +80,75 @@
   <script src="./modules/index.min.js"></script>
   <script type="module" src="main.js"></script>
   <div id="site-status"></div>
+
+  <!--Spotify-->
   <div id="spotify-container">
-  <iframe 
-  src="https://open.spotify.com/embed/playlist/2YzzQRodRYU0XtuRvcSTFO?utm_source=generator&theme=0" 
-  width="340" height="152" frameborder="0" allowfullscreen
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-  loading="lazy"
-  style="border: none; border-radius: 12px;">
-</iframe>
+    <iframe 
+      src="https://open.spotify.com/embed/playlist/2YzzQRodRYU0XtuRvcSTFO?utm_source=generator&theme=0" 
+      width="350" height="155" frameborder="0" allowfullscreen
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy"
+      style="border: none; border-radius: 12px;">
+    </iframe>
+  </div>
+  <!--Spotify End-->
 
-</div>
+  <div class="profileContainer">
+    <div class="card">
+      <div class="profileImage">
+        <img src="./Textures/image.jpg" alt="Profile Picture">
+      </div>
+      <h2 class="name">NotIntense</h2>
+      <p class="title">Software Developer</p>
+      <p class="bio">I've been coding since 2020 with C# and a intrest in C++. I want to make a positive impact in others lives as video games and software has done for me.</p>
+      <div class="icon">
+        <a href="https://github.com/NotIntense" target="_blank" class="hover:text-gray-400 transition duration-300"><i class="fab fa-github fa-2x"></i></a>
+        <a href="https://gitlab.com/notintense" target="_blank" class="hover:text-gray-400 transition duration-300"><i class="fa-brands fa-gitlab fa-2x"></i></a>
+        <a href="mailto:contact@notintense.com" target="_blank" class="hover:text-gray-400 transition duration-300"><i class="fa-solid fa-envelope fa-2x"></i></a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="info">
+        <h2 class="header">What I do:</h2>
+        <p class="bioProjects">As a aspiring software/game developer, I try and get as much hands-on experience with the field as possible. 
+          I work primarily with C# and Unity to work on community projects to indie studios.
+        </p>
+      </div>
 
+      <!--SCP Valravn-->
+      <a href="https://store.steampowered.com/app/2707670/SCP_Valravn/" target="_blank" style="text-decoration: none;">
+        <div class="projectObject">
+          <img class="projectImage" src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2707670/hero_capsule.jpg?t=1744836505">
+            <div class="projectText">
+              <h2 class="projectTitle">SCP: Valravn</h2>
+              <p class="projectDesc">You never lose a war, when war is what you sell. Infiltrate the Valravn Corp. Put down the horrors in the dark. Containment is not enough.</p>
+            </div>
+        </div>
+      </a>
+      <!--End SCP Valravn-->
+      <!--SCP Labrat-->
+      <a href="https://store.steampowered.com/app/1402020/SCP_Labrat/" target="_blank" style="text-decoration: none;">
+        <div class="projectObject">
+          <img class="projectImage" src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1402020/hero_capsule.jpg?t=1739980764">
+            <div class="projectText">
+              <h2 class="projectTitle">SCP: Labrat</h2>
+              <p class="projectDesc">You are a test subject in the underground SCP research facility. When a containment breach occurs, you must find your way out. Escape the SCPs, discover anomalous objects, and collect valuable resources along the way. </p>
+            </div>
+        </div>
+      </a>
+      <!--End SCP Labrat-->
+      <!--Personal/Community projects-->
+      <a href="https://github.com/NotIntense" target="_blank" style="text-decoration: none;">
+        <div class="projectObject">
+          <img class="projectImage" src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png">
+            <div class="projectText">
+              <h2 class="projectTitle">Personal/Community projects</h2>
+              <p class="projectDesc">Go here to visit personal and community projects I've contributed to!</p>
+            </div>
+        </div>
+      </a>
+      <!--End Personal/Community projects-->
+    </div>
+  </div>
 </body>
 </html>
