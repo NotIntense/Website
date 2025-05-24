@@ -91,20 +91,22 @@ window.addEventListener('resize', () => {
 });
 
 const statusEl = document.getElementById('site-status');
-const fileReader = new FileReader();
-const statusText = fileReader.readAsText("https://notintense.com/api/status.txt");
+fetch('/api/status.txt').then(res => res.text()).then(text => {
 
-if (statusText && statusText.trim() !== "") {
-  statusEl.textContent = statusText;
-  statusEl.style.display = "block";
-  requestAnimationFrame(() => {
-    document.documentElement.style.setProperty('--site-status-height', `${statusEl.offsetHeight}px`);
+    const statusText = text;
+    if (statusText && statusText.trim() !== "") {
+    statusEl.textContent = statusText;
+    statusEl.style.display = "block";
+    requestAnimationFrame(() => {
+      document.documentElement.style.setProperty('--site-status-height', `${statusEl.offsetHeight}px`);
+    });
+    } 
+    else {
+      statusEl.style.display = "none";
+      document.documentElement.style.setProperty('--site-status-height', `0px`);
+    }
+    
   });
-} 
-else {
-  statusEl.style.display = "none";
-  document.documentElement.style.setProperty('--site-status-height', `0px`);
-}
 
 const toggleBtn = document.getElementById("toggle-ui");
 const uiContainer = document.querySelector(".profileContainer");
