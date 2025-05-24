@@ -1,22 +1,22 @@
 *{
-    padding:0;
-    margin:0;
-    box-sizing: border-box;
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
 }
 body{
-    font:1em Inter, sans-serif;
-    margin: 0;
-    color:#224;
+  font:1em Inter, sans-serif;
+  margin: 0;
+  color:#224;
 }
 .profileContainer {
-    display: flex;
-    min-height: calc(100dvh - var(--site-status-height, 36px) - env(safe-area-inset-top));
-    flex-wrap: wrap;
-    position: relative;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    padding-top: calc(var(--site-status-height, 36px) + env(safe-area-inset-top));
+  display: flex;
+  min-height: calc(100dvh - var(--site-status-height, 36px) - env(safe-area-inset-top));
+  flex-wrap: wrap;
+  position: relative;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding-top: calc(var(--site-status-height, 36px) + env(safe-area-inset-top));
 }
 .card {
   position: relative;
@@ -44,66 +44,72 @@ body{
   z-index: -1;
 }
 .card:hover{
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
-
 .profileImage{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto 0;
-    border: 2px solid #fff;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 0;
+  border: 2px solid #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 .profileImage img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 .name{
-    text-align: center;
-    font-size: 24px;
-    margin: 30px 0 5px;
-    color: #ffffff;
+  text-align: center;
+  font-size: 24px;
+  margin: 30px 0 5px;
+  color: #ffffff;
 }
 .title{
-    text-align: center;
-    font-size: 18px;
-    color: #a7a7a7c0;
-    margin-bottom: 15px;
+  text-align: center;
+  font-size: 18px;
+  color: #a7a7a7c0;
+  margin-bottom: 15px;
 }
 .bio{
-    font-size: 16px;
-    text-align: center;
-    color: #757575;
-    max-width: 232px;
+  font-size: 16px;
+  text-align: center;
+  color: #757575;
+  max-width: 232px;
 }
 .bioProjects{
-    font-size: 16px;
-    text-align: center;
-    color: #757575;
+  font-size: 16px;
+  text-align: center;
+  color: #757575;
 }
 .icon{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    gap: 15px;
-    transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
 }
-.icon:hover{
-    transform: scale(1.05);
+.iconItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  transition: color 0.3s ease;
+}
+.iconItem:hover {
+  color: gray;
+  transition: duration-200;
 }
 .header{
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    margin: -15px 0 5px;
-    color: #ffffff;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  margin: -15px 0 5px;
+  color: #ffffff;
 }
 .projectObject {
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -121,14 +127,14 @@ body{
   transition: transform 0.3s ease;
 }
 .projectObject:hover{
-    transform: scale(1.05);
-    border: 1px solid rgba(255, 255, 255, 0.774);
+  transform: scale(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.774);
 }
 .projectImage {
   width: 75px;
   height: 75px;
   object-fit: cover; 
-  border-radius: 12px;
+  border-radius: 24px;
 }
 .projectTitle {
   color: white;
