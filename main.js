@@ -91,7 +91,8 @@ window.addEventListener('resize', () => {
 });
 
 const statusEl = document.getElementById('site-status');
-const statusText = "New updated website! More plans to come but I hope y'all like it :3";
+const fileReader = new FileReader();
+const statusText = fileReader.readAsText("https://notintense.com/api/status.txt");
 
 if (statusText && statusText.trim() !== "") {
   statusEl.textContent = statusText;
