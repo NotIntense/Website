@@ -35,21 +35,35 @@ function getGridPosition(x, y, z) {
     return [x, y ,z].map((c) => (c / gridSize));
 }
 
+const sphereGeometry = new THREE.SphereGeometry(0.04, 24, 24);
+const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+
+const gridWidth = maxDis * 2;
+const totalInstances = gridWidth * gridWidth;
+
+const instancedMesh = new THREE.InstancedMesh(sphereGeometry, material, totalInstances);
+scene.add(instancedMesh);
+
+
 let particles = [];
-for(let x = -maxDis; x < maxDis; x++) {
+let index = 0;
+const dummy = new THREE.Object3D();
+
+for (let x = -maxDis; x < maxDis; x++) {
     let pGroup = [];
-    for(let z = -maxDis; z < maxDis; z++) {
-        const geometry = new THREE.SphereGeometry(0.04, 24, 24);
-        const material = new THREE.MeshStandardMaterial( {color: 0xffffff } );
-        const p = new THREE.Mesh(geometry, material);
+    for (let z = -maxDis; z < maxDis; z++) {
+        const pos = new THREE.Vector3(x, 0, z);
+        dummy.position.copy(pos);
+        dummy.updateMatrix();
+        instancedMesh.setMatrixAt(index, dummy.matrix);
 
-        p.position.set(x, 0, z);
-        scene.add(p);
-
-        pGroup.push(p);
+        pGroup.push({ index, position: pos.clone() });
+        index++;
     }
     particles.push(pGroup);
 }
+instancedMesh.instanceMatrix.needsUpdate = true;
+
 
 let frame = 0;
 let originalCameraPos = camera.position.clone();
@@ -67,18 +81,23 @@ function animate() {
 
     //controls.update();
 
-    particles.forEach((pGroup, i) => {
-        pGroup.forEach((p, j) => {
-            p.position.y = Math.sin(Math.sqrt((p.position.x + maxDis) ** 2 + (p.position.z + maxDis) ** 2) / 3 + frame) * 2;
-        });
+    particles.forEach(pGroup => {
+    pGroup.forEach(p => {
+        const { index, position } = p;
+        dummy.position.set(position.x, Math.sin(Math.sqrt((position.x + maxDis) ** 2 + (position.z + maxDis) ** 2) / 3 + frame) * 2, position.z);
+        dummy.updateMatrix();
+        instancedMesh.setMatrixAt(index, dummy.matrix);
+      });
     });
+    instancedMesh.instanceMatrix.needsUpdate = true;
+
 
     const maxSway = 0.5;
     const targetOffset = new THREE.Vector3(mouse.x * maxSway, mouse.y * maxSway, 0);
     const targetPos = originalCameraPos.clone().add(targetOffset);
     camera.position.lerp(targetPos, 0.1);
 
-    frame += 0.02;
+    frame += 0.01;
     renderer.render(scene, camera);
 }
 animate();
