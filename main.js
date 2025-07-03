@@ -1,5 +1,16 @@
 import * as THREE from './modules/three.module.js';
 
+if (window.location.hostname === 'brebby.notintense.com') {
+    fetch('/brebby/index.html')
+      .then(response => response.text())
+      .then(html => {
+        document.open();
+        document.write(html);
+        document.close();
+      })
+      .catch(err => console.error('Failed to load brebby content:', err));
+  }
+
 const maxDis = 50;
 const gridSize = 3;
 const step = 0.3;
