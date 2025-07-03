@@ -1,15 +1,22 @@
 import * as THREE from './modules/three.module.js';
 
 if (window.location.hostname === 'brebby.notintense.com') {
-    fetch('/brebby/index.html')
-      .then(response => response.text())
-      .then(html => {
-        document.open();
-        document.write(html);
-        document.close();
-      })
-      .catch(err => console.error('Failed to load brebby content:', err));
-  }
+  fetch('/brebby/index.html')
+    .then(res => res.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const brebbyBody = doc.body.innerHTML;
+
+      const container = document.getElementById('content-container');
+      container.innerHTML = brebbyBody;
+      container.classList.add('visible');
+    })
+    .catch(err => console.error(err));
+} else {
+  document.getElementById('content-container').classList.add('visible');
+}
+
 
 const maxDis = 50;
 const gridSize = 3;
