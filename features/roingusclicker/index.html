@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secret Clicker</title>
+
+    <style>
+        img {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        scale: 150%;
+        transition: transform 0.2s;
+    }
+
+    img:hover {
+        cursor: grab;
+    }
+
+    img:hover:not(.shrink) {
+        transform: scale(1.05);
+    }
+
+    img.shrink {
+        transform: scale(0.9);
+        transition: transform 0.01s ease;
+        cursor: pointer;
+    }
+
+    </style>
+
+</head>
+<body>
+    <p id="clickCount" style="text-align: center; align-content: center; padding-top: 10%;">Clicks: 0</p>
+    <img id="roingus" src="/textures/ROINGY.png" alt="roingus" onmousedown="clickRoing()">
+    <audio id="sound" src="/sfx/squeak.mp3"></audio>
+</body>
+</html> 
+
+<script>
+    let audioPlayer = document.getElementById('sound');
+    let img = document.getElementById('roingus');
+    let clickCount = document.getElementById('clickCount');
+    
+    function getCookie(name) {
+        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? parseInt(match[2]) : 0;
+    }
+
+    function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+    }
+
+    let clickAmt = getCookie("clicks") || 0;
+    clickCount.textContent = "Clicks: " + clickAmt;
+
+    function clickRoing(){
+        playSfx();
+
+        clickAmt++;
+        clickCount.textContent = "Clicks: " + clickAmt;
+        setCookie("clicks", clickAmt, 30);
+
+        img.classList.add('shrink');
+        setTimeout(() => {
+            img.classList.remove('shrink');
+         }, 10);
+    }
+
+    function playSfx(){
+        const soundClone = audioPlayer.cloneNode();
+        soundClone.play();
+    }
+</script>
