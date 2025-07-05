@@ -8,77 +8,10 @@
   <link href="./style.css" rel="stylesheet">
   <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   <title>NotIntense | Developer Portfolio</title>
-
-  <style>
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    #spotify-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(10, 10, 10, 0.8);
-      padding: 10px;
-      border-radius: 16px;
-      z-index: 999;
-      transition: transform 0.3s ease;
-    }
-
-    #spotify-container:hover {
-      transform: scale(1.05);
-    }
-
-    #site-status {
-      width: 100%;
-      background: rgba(0, 255, 255, 0.1);
-      color: #fff;
-      text-align: center;
-      padding: 8px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    body {
-      padding-top: 36px; 
-    }
-    .container {
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #000;
-    }
-
-    body {
-      min-height: 100svh;
-      padding-top: env(safe-area-inset-top);
-      padding-right: env(safe-area-inset-right);
-      padding-bottom: env(safe-area-inset-bottom);
-      padding-left: env(safe-area-inset-left);
-      box-sizing: border-box;
-    }
-
-    .profileContainer {
-      position: relative;
-    }
-
-  </style>
 </head>
 <body>
   <div id="content-container">
-   <canvas id="bg"></canvas>
+  <canvas id="bg" style="opacity: 0.1;"></canvas>
   <script src="./modules/index.min.js"></script>
   <script type="module" src="main.js" defer></script>
   <div id="site-status"></div>
@@ -97,7 +30,7 @@
   </div>
   <!--Spotify End-->
 
-  <div class="profileContainer">
+  <div id="pfctnr" class="profileContainer">
     <div class="card">
       <div class="profileImage">
         <img src="./textures/image.jpg" alt="Profile Picture">

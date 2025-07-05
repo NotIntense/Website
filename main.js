@@ -12,8 +12,16 @@ if (window.location.hostname === 'brebby.notintense.com') {
 }
 else{
   document.getElementById('content-container').classList.add('visible');
+  document.getElementById('bg').style.opacity = 1;
+  
+  let cardList = document.getElementById('pfctnr').getElementsByClassName('card');
+
+  for (let i = 0; i < cardList.length; i++) { 
+      cardList[i].style.opacity = 1;
+  }
 }
 
+document.getElementById('content-container').style.opacity='1';
 
 const maxDis = 50;
 const gridSize = 3;

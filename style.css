@@ -34,6 +34,10 @@ body{
   align-items: center;
   box-sizing: border-box;
   transition: transform 0.3s ease;
+
+  opacity: 0.1;
+  transition: opacity 0.5s;
+  -webkit-transition: opacity 2s; /* Safari */
 }
 .card::before {
   content: "";
@@ -174,6 +178,11 @@ body{
   } #content-container.visible {
     visibility: visible;
   }
+#bg{ 
+    opacity: 0.1;
+    transition: opacity 1s;
+    -webkit-transition: opacity 2s; /* Safari */
+}
 #toggle-ui:hover {
   background: rgba(30, 30, 30, 0.9);
 }
@@ -189,3 +198,66 @@ a, a:visited, a:active {
     display: none;
   }
 }
+canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    #spotify-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(10, 10, 10, 0.8);
+      padding: 10px;
+      border-radius: 16px;
+      z-index: 999;
+      transition: transform 0.3s ease;
+    }
+
+    #spotify-container:hover {
+      transform: scale(1.05);
+    }
+
+    #site-status {
+      width: 100%;
+      background: rgba(0, 255, 255, 0.1);
+      color: #fff;
+      text-align: center;
+      padding: 8px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    body {
+      padding-top: 36px; 
+    }
+    .container {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+    }
+
+    body {
+      min-height: 100svh;
+      padding-top: env(safe-area-inset-top);
+      padding-right: env(safe-area-inset-right);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      box-sizing: border-box;
+    }
+
+    .profileContainer {
+      position: relative;
+    }
