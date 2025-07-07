@@ -2,6 +2,10 @@
 <html>
 <head>
     <title>Secret Clicker</title>
+    <link rel="icon" type="image/x-icon" href="/textures/ROINGY.png">
+    <button id="toggle-sound" title="Toggle Sound">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <i class="fa-solid fa-volume-high"></i></button>
 
     <style>
         img {
@@ -40,6 +44,8 @@
 </html> 
 
 <script>
+    let soundEnabled = true;
+
     let audioPlayer = document.getElementById('sound');
     let img = document.getElementById('roingus');
     let clickCount = document.getElementById('clickCount');
@@ -58,7 +64,9 @@
     clickCount.textContent = "Clicks: " + clickAmt;
 
     function clickRoing(){
-        playSfx();
+
+        if (soundEnabled)
+            playSfx();
 
         clickAmt++;
         clickCount.textContent = "Clicks: " + clickAmt;
@@ -74,4 +82,17 @@
         const soundClone = audioPlayer.cloneNode();
         soundClone.play();
     }
+
+    const toggleBtn = document.getElementById("toggle-sound");
+    const icon = toggleBtn.querySelector("i");
+    
+    toggleBtn.addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+        icon.classList.remove("fa-volume-xmark");
+        icon.classList.add("fa-volume-high");
+    } else {
+        icon.classList.remove("fa-volume-high");
+        icon.classList.add("fa-volume-xmark");
+    }});
 </script>
