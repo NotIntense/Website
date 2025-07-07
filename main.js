@@ -46,18 +46,6 @@ pointLight.position.set(10, 10, 10);
 
 scene.add(pointLight);
 
-//const controls = new OrbitControls(camera, renderer.domElement);
-
-function getPerlinVec(x, y, z, frame = 0)
-{
-    let max = maxDis / gridSize;
-    return [x, y ,z].map((c) => (noise.perlin2(c / max, frame) * step));
-}
-
-function getGridPosition(x, y, z) {
-    return [x, y ,z].map((c) => (c / gridSize));
-}
-
 const sphereGeometry = new THREE.SphereGeometry(0.04, 24, 24);
 const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
