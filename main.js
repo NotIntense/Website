@@ -1,23 +1,20 @@
 import * as THREE from './modules/three.module.js';
 
 if (window.location.hostname === 'brebby.notintense.com') {
-    fetch('/brebby/index.html')
-      .then(response => response.text())
-      .then(html => {
-        document.open();
-        document.write(html);
-        document.close();
-      })
-      .catch(err => console.error('Failed to load brebby content:', err));
-}
-else{
+  fetch('/brebby/index.html')
+    .then(response => response.text())
+    .then(html => {
+      document.open();
+      document.write(html);
+      document.close();
+    })
+    .catch(err => console.error('Failed to load brebby content:', err));
+} else {
   document.getElementById('content-container').classList.add('visible');
   document.getElementById('bg').style.opacity = 1;
-  
-  let cardList = document.getElementById('pfctnr').getElementsByClassName('card');
-
-  for (let i = 0; i < cardList.length; i++) { 
-      cardList[i].style.opacity = 1;
+  let cards = document.getElementById('pfctnr').getElementsByClassName('card');
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].style.opacity = 1;
   }
 }
 
