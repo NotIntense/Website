@@ -17,6 +17,7 @@ body{
   justify-content: center;
   align-items: center;
   padding-top: calc(var(--site-status-height, 36px) + env(safe-area-inset-top));
+  perspective: 1000px;
 }
 .card {
   position: relative;
@@ -34,7 +35,7 @@ body{
   align-items: center;
   box-sizing: border-box;
   transition: transform 0.3s ease;
-
+  transform-style: preserve-3d;
   opacity: 0.1;
   transition: opacity 0.5s;
   -webkit-transition: opacity 2s; /* Safari */
@@ -46,9 +47,13 @@ body{
   background: black;
   filter: blur(15px);
   z-index: -1;
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
 }
 .card:hover{
   transform: scale(1.05);
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
 }
 .profileImage{
   width: 100px;
@@ -95,6 +100,28 @@ body{
   align-items: center;
   margin-top: 20px;
   gap: 15px;
+}
+.buttonMore {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: white;
+  border-radius: 0;
+  border-color: transparent;
+  margin-top: 15px;
+  margin-bottom: -15px;
+}
+.buttonMore:hover {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: rgb(173, 173, 173);
+  border-radius: 3;
+  border-spacing: 5px;
+  border-color: transparent;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: -15px;
 }
 .iconItem {
   display: flex;
@@ -183,6 +210,39 @@ body{
     transition: opacity 1s;
     -webkit-transition: opacity 2s; /* Safari */
 }
+
+.flagiconItem {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  .flagiconItem .flagtooltip {
+    visibility: hidden;
+    opacity: 0;
+    width: max-content;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 125%; /* place above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.2s ease-in-out;
+    white-space: pre-line;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 100;
+  }
+
+  .flagiconItem:hover .flagtooltip {
+    visibility: visible;
+    opacity: 1; }
+
+
 #toggle-ui:hover {
   background: rgba(30, 30, 30, 0.9);
 }
@@ -261,3 +321,4 @@ canvas {
     .profileContainer {
       position: relative;
     }
+    

@@ -31,18 +31,51 @@
   <!--Spotify End-->
 
   <div id="pfctnr" class="profileContainer">
-    <div class="card">
-      <div class="profileImage">
+    <div class="card" id="mainProfileCard">
+      <div id="frontCard">
+        <div class="profileImage">
         <img src="./textures/image.jpg" alt="Profile Picture">
+        </div>
+        <h2 class="name">NotIntense</h2>
+        <p class="title">Software Developer</p>
+        <p class="bio">I'm a current high school student passionate in pursuing Computer Science/Engineering as a lifetime carrer. Starting when I was 12, I know C#, Javascript, and the Unity game engine.</p>
+        <div class="icon">
+          <a href="https://github.com/NotIntense" target="_blank" class="iconItem"><i class="fab fa-github fa-2x"></i></a>
+          <a href="https://gitlab.com/notintense" target="_blank" class="iconItem"><i class="fa-brands fa-gitlab fa-2x"></i></a>
+          <a href="mailto:contact@notintense.com" target="_blank" class="iconItem"><i class="fa-solid fa-envelope fa-2x"></i></a>
+        </div>
       </div>
-      <h2 class="name">NotIntense</h2>
-      <p class="title">Software Developer</p>
-      <p class="bio">I'm a current high school student passionate in pursuing Computer Science/Engineering as a lifetime carrer. Starting when I was 12, I know C#, Javascript, and the Unity game engine.</p>
-      <div class="icon">
-        <a href="https://github.com/NotIntense" target="_blank" class="iconItem"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://gitlab.com/notintense" target="_blank" class="iconItem"><i class="fa-brands fa-gitlab fa-2x"></i></a>
-        <a href="mailto:contact@notintense.com" target="_blank" class="iconItem"><i class="fa-solid fa-envelope fa-2x"></i></a>
+      <div id="backCard" style="display: none; transform: rotateY(-180deg);">
+        <div class="profileImage">
+          <img src="./textures/image.jpg" alt="Profile Picture">
+        </div>
+        <h2 class="name" style="margin-bottom: -32px;">NotIntense</h2>
+        <h2 class="name" style="scale: 75%;">(Inty)</h2>
+        <p class="title">German-born American</p>
+        <p class="bio">I've lived in 7 U.S. states and two countries. I've far worked with two game development studios on providing updates/game development to the Steam gaming platform.
+          My goal is to one day get up on a level with major tech companies :>
+        </p>
+        <div class="icon">
+          <a href="#" class="flagiconItem"> 🇩🇪
+            <div class="flagtooltip">
+              Bayern (5y)<br>
+            </div>
+          </a>
+
+          <a href="#" class="flagiconItem"> 🇺🇸
+            <div class="flagtooltip">
+              California (2y)<br>
+              Washington D.C. (2y)<br>
+              Kansas (2y)<br>
+              Virgina (2y)<br>
+              Georgia (2y)<br>
+              North Carolina (2y)<br>
+              Kentucky
+            </div>
+          </a>
+        </div>
       </div>
+      <button type="button" id="oh,Hi" class="buttonMore" onclick="mainCardMoreInfo()">More info</button>
     </div>
     <div class="card">
       <div class="info">
@@ -88,4 +121,34 @@
   </div>
   </div>
 </body>
+
+<script>
+  let rotated = false;
+  let pC = document.getElementById('mainProfileCard');
+  let button = document.getElementById('oh,Hi');
+  let frontCard = document.getElementById('frontCard');
+  let backCard = document.getElementById('backCard');
+
+  function mainCardMoreInfo() {
+
+    if (!rotated){
+      pC.style.transform = 'rotateY(-180deg)';
+      button.style.transform = 'rotateY(-180deg)';
+      frontCard.style.display = "none";
+      
+      backCard.style.display = "block";
+
+      rotated = true;
+    }
+    else{
+      pC.style.transform = 'rotateY(0deg)';
+      button.style.transform = 'rotateY(0deg)';
+      frontCard.style.display = "block";
+
+      backCard.style.display = "none";
+
+      rotated = false;
+    }
+  }
+</script>
 </html>
