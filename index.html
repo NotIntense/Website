@@ -6,77 +6,12 @@
   <link rel="icon" type="image/x-icon" href="textures\favico.ico">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="./style.css" rel="stylesheet">
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   <title>NotIntense | Developer Portfolio</title>
-
-  <style>
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    #spotify-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(10, 10, 10, 0.8);
-      padding: 10px;
-      border-radius: 16px;
-      z-index: 999;
-      transition: transform 0.3s ease;
-    }
-
-    #spotify-container:hover {
-      transform: scale(1.05);
-    }
-
-    #site-status {
-      width: 100%;
-      background: rgba(0, 255, 255, 0.1);
-      color: #fff;
-      text-align: center;
-      padding: 8px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    body {
-      padding-top: 36px; 
-    }
-    .container {
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #000;
-    }
-
-    body {
-      min-height: 100svh;
-      padding-top: env(safe-area-inset-top);
-      padding-right: env(safe-area-inset-right);
-      padding-bottom: env(safe-area-inset-bottom);
-      padding-left: env(safe-area-inset-left);
-      box-sizing: border-box;
-    }
-
-    .profileContainer {
-      position: relative;
-    }
-
-  </style>
 </head>
 <body>
-  <canvas id="bg"></canvas>
+  <div id="content-container">
+  <canvas id="bg" style="opacity: 0.1;"></canvas>
   <script src="./modules/index.min.js"></script>
   <script type="module" src="main.js" defer></script>
   <div id="site-status"></div>
@@ -95,24 +30,57 @@
   </div>
   <!--Spotify End-->
 
-  <div class="profileContainer">
-    <div class="card">
-      <div class="profileImage">
+  <div id="pfctnr" class="profileContainer">
+    <div class="card" id="mainProfileCard">
+      <div id="frontCard">
+        <div class="profileImage">
         <img src="./textures/image.jpg" alt="Profile Picture">
+        </div>
+        <h2 class="name">NotIntense</h2>
+        <p class="title">Software Developer</p>
+        <p class="bio">I'm a current high school student passionate in pursuing Computer Science/Engineering as a lifetime carrer. Starting when I was 12, I know C#, Javascript, and the Unity game engine.</p>
+        <div class="icon">
+          <a href="https://github.com/NotIntense" target="_blank" class="iconItem"><i class="fab fa-github fa-2x"></i></a>
+          <a href="https://gitlab.com/notintense" target="_blank" class="iconItem"><i class="fa-brands fa-gitlab fa-2x"></i></a>
+          <a href="mailto:contact@notintense.com" target="_blank" class="iconItem"><i class="fa-solid fa-envelope fa-2x"></i></a>
+        </div>
       </div>
-      <h2 class="name">NotIntense</h2>
-      <p class="title">Software Developer</p>
-      <p class="bio">not sure what to put here!</p>
-      <div class="icon">
-        <a href="https://github.com/NotIntense" target="_blank" class="iconItem"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://gitlab.com/notintense" target="_blank" class="iconItem"><i class="fa-brands fa-gitlab fa-2x"></i></a>
-        <a href="mailto:contact@notintense.com" target="_blank" class="iconItem"><i class="fa-solid fa-envelope fa-2x"></i></a>
+      <div id="backCard" style="display: none; transform: rotateY(-180deg);">
+        <div class="profileImage">
+          <img src="./textures/image.jpg" alt="Profile Picture">
+        </div>
+        <h2 class="name" style="margin-bottom: -32px;">NotIntense</h2>
+        <h2 class="name" style="scale: 75%;">(Inty)</h2>
+        <p class="title">German-born American</p>
+        <p class="bio">I've lived in 7 U.S. states and two countries. I've far worked with two game development studios on providing updates/game development to the Steam gaming platform.
+          My goal is to one day get up on a level with major tech companies :>
+        </p>
+        <div class="icon">
+          <a href="#" class="flagiconItem"> 🇩🇪
+            <div class="flagtooltip">
+              Bayern (5y)<br>
+            </div>
+          </a>
+
+          <a href="#" class="flagiconItem"> 🇺🇸
+            <div class="flagtooltip">
+              California (2y)<br>
+              Washington D.C. (2y)<br>
+              Kansas (2y)<br>
+              Virgina (2y)<br>
+              Georgia (2y)<br>
+              North Carolina (2y)<br>
+              Kentucky
+            </div>
+          </a>
+        </div>
       </div>
+      <button type="button" id="oh,Hi" class="buttonMore" onclick="mainCardMoreInfo()">More info</button>
     </div>
     <div class="card">
       <div class="info">
         <h2 class="header">What I do:</h2>
-        <p class="bioProjects">Stuff I do.
+        <p class="bioProjects">Below include a range of Steam projects I've worked on with studios to personal or community projects on Github.
         </p>
       </div>
 
@@ -151,5 +119,36 @@
       <!--End Personal/Community projects-->
     </div>
   </div>
+  </div>
 </body>
+
+<script>
+  let rotated = false;
+  let pC = document.getElementById('mainProfileCard');
+  let button = document.getElementById('oh,Hi');
+  let frontCard = document.getElementById('frontCard');
+  let backCard = document.getElementById('backCard');
+
+  function mainCardMoreInfo() {
+
+    if (!rotated){
+      pC.style.transform = 'rotateY(-180deg)';
+      button.style.transform = 'rotateY(-180deg)';
+      frontCard.style.display = "none";
+      
+      backCard.style.display = "block";
+
+      rotated = true;
+    }
+    else{
+      pC.style.transform = 'rotateY(0deg)';
+      button.style.transform = 'rotateY(0deg)';
+      frontCard.style.display = "block";
+
+      backCard.style.display = "none";
+
+      rotated = false;
+    }
+  }
+</script>
 </html>

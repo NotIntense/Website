@@ -1,5 +1,14 @@
 import * as THREE from './modules/three.module.js';
 
+document.getElementById('content-container').classList.add('visible');
+  document.getElementById('bg').style.opacity = 1;
+  let cards = document.getElementById('pfctnr').getElementsByClassName('card');
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].style.opacity = 1;
+  }
+
+document.getElementById('content-container').style.opacity='1';
+
 const maxDis = 50;
 const gridSize = 3;
 const step = 0.3;
@@ -81,19 +90,15 @@ function animate() {
     if (delta  > interval) {
         //controls.update();
 
-        particles.forEach(pGroup => {
-        pGroup.forEach(p => {
-            const { index, position } = p;
-            dummy.position.set(position.x, Math.sin(Math.sqrt((position.x + maxDis) ** 2 + (position.z + maxDis) ** 2) / 3 + frame) * 2, position.z);
-            dummy.updateMatrix();
-            instancedMesh.setMatrixAt(index, dummy.matrix);
-          });
-        });
-        instancedMesh.instanceMatrix.needsUpdate = true;
-
-        frame += 0.03;
-        delta = delta % interval;
-    }
+    particles.forEach(pGroup => {
+    pGroup.forEach(p => {
+        const { index, position } = p;
+        dummy.position.set(position.x, Math.sin(Math.sqrt((position.x + maxDis) ** 2 + (position.z + maxDis) ** 2) / 3 + frame) * 2, position.z);
+        dummy.updateMatrix();
+        instancedMesh.setMatrixAt(index, dummy.matrix);
+      });
+    });
+    instancedMesh.instanceMatrix.needsUpdate = true;
 
     const maxSway = 0.5;
     const targetOffset = new THREE.Vector3(mouse.x * maxSway, mouse.y * maxSway, 0);
