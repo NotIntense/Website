@@ -4,6 +4,8 @@ const maxDis = 50;
 const gridSize = 3;
 const step = 0.3;
 
+navigator.gpu?.requestAdapter({ powerPreference: "high-performance" });
+
 const scene = new THREE.Scene();
 const noise = new Noise(Math.random());
 
@@ -24,16 +26,6 @@ pointLight.position.set(10, 10, 10);
 scene.add(pointLight);
 
 //const controls = new OrbitControls(camera, renderer.domElement);
-
-function getPerlinVec(x, y, z, frame = 0)
-{
-    let max = maxDis / gridSize;
-    return [x, y ,z].map((c) => (noise.perlin2(c / max, frame) * step));
-}
-
-function getGridPosition(x, y, z) {
-    return [x, y ,z].map((c) => (c / gridSize));
-}
 
 const sphereGeometry = new THREE.SphereGeometry(0.04, 24, 24);
 const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -76,28 +68,38 @@ window.addEventListener('mousemove', (ev) => {
     mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
 });
 
+let clock = new THREE.Clock();
+let delta = 0;
+// 30 fps
+let interval = 1 / 60;
+
 function animate() {
     requestAnimationFrame(animate);
 
-    //controls.update();
+    delta += clock.getDelta();
+    
+    if (delta  > interval) {
+        //controls.update();
 
-    particles.forEach(pGroup => {
-    pGroup.forEach(p => {
-        const { index, position } = p;
-        dummy.position.set(position.x, Math.sin(Math.sqrt((position.x + maxDis) ** 2 + (position.z + maxDis) ** 2) / 3 + frame) * 2, position.z);
-        dummy.updateMatrix();
-        instancedMesh.setMatrixAt(index, dummy.matrix);
-      });
-    });
-    instancedMesh.instanceMatrix.needsUpdate = true;
+        particles.forEach(pGroup => {
+        pGroup.forEach(p => {
+            const { index, position } = p;
+            dummy.position.set(position.x, Math.sin(Math.sqrt((position.x + maxDis) ** 2 + (position.z + maxDis) ** 2) / 3 + frame) * 2, position.z);
+            dummy.updateMatrix();
+            instancedMesh.setMatrixAt(index, dummy.matrix);
+          });
+        });
+        instancedMesh.instanceMatrix.needsUpdate = true;
 
+        frame += 0.03;
+        delta = delta % interval;
+    }
 
     const maxSway = 0.5;
     const targetOffset = new THREE.Vector3(mouse.x * maxSway, mouse.y * maxSway, 0);
     const targetPos = originalCameraPos.clone().add(targetOffset);
     camera.position.lerp(targetPos, 0.1);
 
-    frame += 0.01;
     renderer.render(scene, camera);
 }
 animate();
