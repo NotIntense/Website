@@ -107,6 +107,7 @@ function animate() {
 
     renderer.render(scene, camera);
 }
+
 animate();
 
 window.addEventListener('resize', () => {
@@ -149,4 +150,4 @@ toggleBtn.addEventListener("click", () => {
     icon.classList.remove("fa-eye");
     icon.classList.add("fa-eye-slash");
   }
-});
+})};
