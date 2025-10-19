@@ -13,8 +13,6 @@ const maxDis = 50;
 const gridSize = 3;
 const step = 0.3;
 
-navigator.gpu?.requestAdapter({ powerPreference: "high-performance" });
-
 const scene = new THREE.Scene();
 const noise = new Noise(Math.random());
 
@@ -33,8 +31,6 @@ const pointLight = new THREE.PointLight(0xffffff, 1000);
 pointLight.position.set(10, 10, 10);
 
 scene.add(pointLight);
-
-//const controls = new OrbitControls(camera, renderer.domElement);
 
 const sphereGeometry = new THREE.SphereGeometry(0.04, 24, 24);
 const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -77,18 +73,10 @@ window.addEventListener('mousemove', (ev) => {
     mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
 });
 
-let clock = new THREE.Clock();
-let delta = 0;
-// 30 fps
-let interval = 1 / 60;
-
 function animate() {
     requestAnimationFrame(animate);
 
-    delta += clock.getDelta();
-    
-    if (delta  > interval) {
-        //controls.update();
+    //controls.update();
 
     particles.forEach(pGroup => {
     pGroup.forEach(p => {
@@ -105,9 +93,9 @@ function animate() {
     const targetPos = originalCameraPos.clone().add(targetOffset);
     camera.position.lerp(targetPos, 0.1);
 
+    frame += 0.01;
     renderer.render(scene, camera);
 }
-
 animate();
 
 window.addEventListener('resize', () => {
@@ -150,4 +138,4 @@ toggleBtn.addEventListener("click", () => {
     icon.classList.remove("fa-eye");
     icon.classList.add("fa-eye-slash");
   }
-})};
+});
