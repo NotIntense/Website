@@ -1,5 +1,7 @@
 import * as THREE from './modules/three.module.js';
 
+navigator.gpu?.requestAdapter({ powerPreference: "high-performance" });
+
 document.getElementById('content-container').classList.add('visible');
   document.getElementById('bg').style.opacity = 1;
   let cards = document.getElementById('pfctnr').getElementsByClassName('card');
