@@ -1,6 +1,9 @@
-import { FBXLoader } from './three/examples/jsm/Addons.js';
+
 import * as THREE from './modules/three.module.js';
-import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
+
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/FBXLoader.js';
+
 
 
 const statusEl = document.getElementById('site-status');
