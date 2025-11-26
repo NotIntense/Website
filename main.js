@@ -1,7 +1,7 @@
 
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+//import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 import { FBXLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/FBXLoader.js';
 
 
@@ -82,13 +82,13 @@ loader.load(
   },
 );
 
-const controls = new OrbitControls(camera, renderer.domElement);
+/*const controls = new OrbitControls(camera, renderer.domElement);
 
 controls.enableDamping = true; 
 controls.dampingFactor = 0.05;
 controls.enableZoom = true; 
 controls.enablePan = true; 
-controls.target.set(0, 0, 0); 
+controls.target.set(0, 0, 0); */
 
 
 function animate() {
@@ -99,7 +99,7 @@ function animate() {
     fbxModel.rotation.x -= 0.003;
     fbxModel.rotation.z += 0.003;
 
-    controls.update();
+    //controls.update();
   }
 
   renderer.render(scene, camera);
