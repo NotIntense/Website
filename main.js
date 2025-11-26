@@ -1,143 +1,112 @@
+import { FBXLoader } from 'three/examples/jsm/Addons.js';
 import * as THREE from './modules/three.module.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-navigator.gpu?.requestAdapter({ powerPreference: "high-performance" });
 
-document.getElementById('content-container').classList.add('visible');
-  document.getElementById('bg').style.opacity = 1;
-  let cards = document.getElementById('pfctnr').getElementsByClassName('card');
-  for (let i = 0; i < cards.length; i++) {
-    cards[i].style.opacity = 1;
-  }
+const statusEl = document.getElementById('site-status');
 
-document.getElementById('content-container').style.opacity='1';
+fetch('/api/status.txt')
+  .then(res => res.text())
+  .then(text => {
+    const statusText = text.trim();
 
-const maxDis = 50;
-const gridSize = 3;
-const step = 0.3;
+    if (statusText) {
+      statusEl.textContent = statusText;
+      statusEl.style.display = "block";
+
+      requestAnimationFrame(() => {
+        document.documentElement.style.setProperty(
+          '--site-status-height',
+          `${statusEl.offsetHeight}px`
+        );
+      });
+
+    } else {
+      statusEl.style.display = "none";
+      document.documentElement.style.setProperty('--site-status-height', '0px');
+    }
+  });
 
 const scene = new THREE.Scene();
-const noise = new Noise(Math.random());
+scene.background = new THREE.Color(0x000000);
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.lookAt(0, -10, 0);
-camera.position.set(0, 25, 0);
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
+camera.position.z = 3;
 
-const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('#bg'),
-});
-
-renderer.setPixelRatio(window.devicePixelRatio);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-
-const pointLight = new THREE.PointLight(0xffffff, 1000);
-pointLight.position.set(10, 10, 10);
-
-scene.add(pointLight);
-
-const sphereGeometry = new THREE.SphereGeometry(0.04, 24, 24);
-const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-
-const gridWidth = maxDis * 2;
-const totalInstances = gridWidth * gridWidth;
-
-const instancedMesh = new THREE.InstancedMesh(sphereGeometry, material, totalInstances);
-scene.add(instancedMesh);
+document.getElementById("content-container").appendChild(renderer.domElement);
 
 
-let particles = [];
-let index = 0;
-const dummy = new THREE.Object3D();
+// Light
+scene.add(new THREE.DirectionalLight(0xffffff, 2));
+scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-for (let x = -maxDis; x < maxDis; x++) {
-    let pGroup = [];
-    for (let z = -maxDis; z < maxDis; z++) {
-        const pos = new THREE.Vector3(x, 0, z);
-        dummy.position.copy(pos);
-        dummy.updateMatrix();
-        instancedMesh.setMatrixAt(index, dummy.matrix);
+let fbxModel = null;
 
-        pGroup.push({ index, position: pos.clone() });
-        index++;
-    }
-    particles.push(pGroup);
-}
-instancedMesh.instanceMatrix.needsUpdate = true;
+const texLoader = new THREE.TextureLoader();
+
+const base = texLoader.load('OneShot/Models/the-sun-from-oneshot/textures/Lightbulb_BaseColor.png');
+const emission = texLoader.load('OneShot/Models/the-sun-from-oneshot/textures/Lightbulb_Emission.png');
 
 
-let frame = 0;
-let originalCameraPos = camera.position.clone();
-let targetOffset = new THREE.Vector3();
+const loader = new FBXLoader();
+loader.load(
+  'OneShot/Models/the-sun-from-oneshot/source/OneShotbulb.fbx',
+  object => {
+    
+    object.scale.set(2, 2, 2);
 
-let mouse = { x: 0, y: 0 };
+    object.traverse((child) => {
+        if (child.isMesh) {
 
-window.addEventListener('mousemove', (ev) => {
-    mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
-});
+            child.material = new THREE.MeshStandardMaterial({
+                map: base,
+                emissiveMap: emission,
+                emissive: new THREE.Color(0xffffff),
+                emissiveIntensity: 0.5
+            });
+
+            child.material.needsUpdate = true;
+        }
+    });
+
+    fbxModel = object;
+    scene.add(object);
+  },
+);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+
+controls.enableDamping = true; 
+controls.dampingFactor = 0.05;
+controls.enableZoom = true; 
+controls.enablePan = true; 
+controls.target.set(0, 0, 0); 
+
 
 function animate() {
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 
-    //controls.update();
+  if (fbxModel) {
+    fbxModel.rotation.y += 0.003;
+    fbxModel.rotation.x -= 0.003;
+    fbxModel.rotation.z += 0.003;
 
-    particles.forEach(pGroup => {
-    pGroup.forEach(p => {
-        const { index, position } = p;
-        dummy.position.set(position.x, Math.sin(Math.sqrt((position.x + maxDis) ** 2 + (position.z + maxDis) ** 2) / 3 + frame) * 2, position.z);
-        dummy.updateMatrix();
-        instancedMesh.setMatrixAt(index, dummy.matrix);
-      });
-    });
-    instancedMesh.instanceMatrix.needsUpdate = true;
+    controls.update();
+  }
 
-    const maxSway = 0.5;
-    const targetOffset = new THREE.Vector3(mouse.x * maxSway, mouse.y * maxSway, 0);
-    const targetPos = originalCameraPos.clone().add(targetOffset);
-    camera.position.lerp(targetPos, 0.1);
-
-    frame += 0.01;
-    renderer.render(scene, camera);
+  renderer.render(scene, camera);
 }
 animate();
 
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-const statusEl = document.getElementById('site-status');
-fetch('/api/status.txt').then(res => res.text()).then(text => {
-
-    const statusText = text;
-    if (statusText && statusText.trim() !== "") {
-    statusEl.textContent = statusText;
-    statusEl.style.display = "block";
-    requestAnimationFrame(() => {
-      document.documentElement.style.setProperty('--site-status-height', `${statusEl.offsetHeight}px`);
-    });
-    } 
-    else {
-      statusEl.style.display = "none";
-      document.documentElement.style.setProperty('--site-status-height', `0px`);
-    }
-    
-  });
-
-const toggleBtn = document.getElementById("toggle-ui");
-const uiContainer = document.querySelector(".profileContainer");
-const icon = toggleBtn.querySelector("i");
-
-let uiVisible = true;
-toggleBtn.addEventListener("click", () => {
-  uiVisible = !uiVisible;
-  uiContainer.style.display = uiVisible ? "flex" : "none";
-  if (uiVisible) {
-    icon.classList.remove("fa-eye-slash");
-    icon.classList.add("fa-eye");
-  } else {
-    icon.classList.remove("fa-eye");
-    icon.classList.add("fa-eye-slash");
-  }
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
