@@ -1,6 +1,6 @@
 import { FBXLoader } from './three/examples/jsm/Addons.js';
 import * as THREE from './modules/three.module.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
 
 
 const statusEl = document.getElementById('site-status');
@@ -42,8 +42,6 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById("content-container").appendChild(renderer.domElement);
 
-
-// Light
 scene.add(new THREE.DirectionalLight(0xffffff, 2));
 scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
