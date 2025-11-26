@@ -1,4 +1,4 @@
-import { FBXLoader } from 'three/examples/jsm/Addons.js';
+import { FBXLoader } from './three/examples/jsm/Addons.js';
 import * as THREE from './modules/three.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
