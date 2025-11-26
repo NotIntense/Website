@@ -94,7 +94,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   if (fbxModel) {
-    fbxModel.rotation.y += 0.003;
+    fbxModel.rotation.y += 0.002;
     fbxModel.rotation.x -= 0.003;
     fbxModel.rotation.z += 0.003;
 
