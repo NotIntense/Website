@@ -68,8 +68,8 @@ loader.load(
             child.material = new THREE.MeshStandardMaterial({
                 map: base,
                 emissiveMap: emission,
-                emissive: new THREE.Color(0xffffff),
-                emissiveIntensity: 0.5
+                emissive: new THREE.Color(0xFFEA00),
+                emissiveIntensity: 2
             });
 
             child.material.needsUpdate = true;
