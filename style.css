@@ -17,6 +17,7 @@ canvas {
   left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 0;
 }
 
 #site-status {
@@ -41,36 +42,6 @@ canvas {
   z-index: 1;
 }
 
-#soundcloud-player {
-  position: fixed;
-  bottom: 20vh; 
-  left: 50%;
-  transform: translateX(-50%);
-  width: 470px;
-  max-width: 70%; 
-  z-index: 10;
-  pointer-events: auto;
-  background: #111;
-}
-
-#soundcloud-player iframe {
-  width: 100%;
-  height: 120px;
-  opacity: 0.2;
-  border: none;
-  border-radius: 10px;
-  transition: opacity 0.3s ease;
-}
-#soundcloud-player iframe:hover {
-  opacity: 0.7;
-}
-
-#soundcloud-player iframe {
-  backdrop-filter: blur(6px);
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-
 #text {
   color: white;
   font-size: 24px;
@@ -87,3 +58,36 @@ canvas {
   opacity: 0.8;
 }
 
+
+.scrolling-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  color: #484995;
+  font-family: "Consolas", monospace;
+  white-space: pre;
+  overflow: hidden;
+  z-index: 0;
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+.scroll-track {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  animation: scroll-up 160s linear infinite;
+}
+
+@keyframes scroll-up {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-200%); }
+}
+
+#content-container {
+  position: relative;
+  z-index: 1;
+}

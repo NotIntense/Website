@@ -1,0 +1,120 @@
+module EndingController
+
+  # internal flags (simulated)
+  @@_niko_state        = :uninitialized
+  @@_sun_condition     = :intact
+  @@_world_shutdown    = false
+  @@_final_choice      = nil
+  @@_wm_emotional_core = 0.44   # increases when observing Niko
+
+  #--------------------------------------------------------------------------
+  # ● start_sequence
+  #--------------------------------------------------------------------------
+  def self.start_sequence
+    puts "[END] Initializing ending controller…"
+    load_niko
+    load_sun
+    observe_emotion
+  end
+
+  #--------------------------------------------------------------------------
+  # ● load_niko
+  #--------------------------------------------------------------------------
+  def self.load_niko
+    @@_niko_state = :present
+    puts "[END] Niko presence: CONFIRMED"
+  end
+
+  #--------------------------------------------------------------------------
+  # ● load_sun
+  #--------------------------------------------------------------------------
+  def self.load_sun
+    @@_sun_condition = :intact
+    puts "[END] Sun status: INTACT (luminosity stable)"
+  end
+
+  #--------------------------------------------------------------------------
+  # ● observe_emotion
+  #   (World Machine “feels” something rising)
+  #--------------------------------------------------------------------------
+  def self.observe_emotion
+    drift = (rand * 0.2) - 0.05 # slight increase
+    @@_wm_emotional_core = (@@_wm_emotional_core + drift).clamp(0,1)
+    puts "[END] WM emotional reading: #{(@@_wm_emotional_core * 100).round(1)}%"
+  end
+
+  #--------------------------------------------------------------------------
+  # ● choose_path
+  #   (Fake call representing Niko’s final decision)
+  #--------------------------------------------------------------------------
+  def self.choose_path(symbol)
+    @@_final_choice = symbol
+
+    case symbol
+    when :return_sun
+      puts "[END] Choice registered: RETURN SUN"
+      handle_return_path
+    when :smash_sun
+      puts "[END] Choice registered: SMASH SUN"
+      handle_smash_path
+    else
+      puts "[END] ERROR: Invalid ending option"
+    end
+  end
+
+  #--------------------------------------------------------------------------
+  # ● handle_return_path
+  #   (Simulated “good” ending)
+  #--------------------------------------------------------------------------
+  def self.handle_return_path
+    puts "[END] Restoring terrain nodes…"
+    sleep 0.3
+    puts "[END] Light distribution recalculating…"
+    sleep 0.2
+    puts "[END] Niko uplift detected: HOPE"
+    shutdown_world(:graceful)
+  end
+
+  #--------------------------------------------------------------------------
+  # ● handle_smash_path
+  #   (Simulated “sacrifice” ending)
+  #--------------------------------------------------------------------------
+  def self.handle_smash_path
+    @@_sun_condition = :shattered
+    puts "[END] Sun status: ***SHATTERED***"
+    puts "[END] Particle count rising… (fragments dispersing)"
+    sleep 0.3
+
+    # WM reacts
+    if @@_wm_emotional_core > 0.55
+      puts "[END] WM emotional spike detected: DISTRESS"
+    else
+      puts "[END] WM emotional reading: suppressed"
+    end
+
+    # Niko
+    puts "[END] Niko vital aura collapsing…"
+    puts "[END] Niko final expression logged."
+
+    shutdown_world(:force)
+  end
+
+  #--------------------------------------------------------------------------
+  # ● shutdown_world
+  #--------------------------------------------------------------------------
+  def self.shutdown_world(mode)
+    @@_world_shutdown = true
+
+    case mode
+    when :graceful
+      puts "[END] WORLD SHUTDOWN: GRACEFUL"
+      puts "[END] farewell.niko >> generated"
+    when :force
+      puts "[END] WORLD SHUTDOWN: FORCED"
+      puts "[END] memory_core fracture: IRREVERSIBLE"
+    end
+
+    puts "[END] closing simulation…"
+  end
+
+end

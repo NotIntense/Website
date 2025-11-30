@@ -1,0 +1,95 @@
+
+class NikoController
+  attr_accessor :position, :energy, :light_source, :inventory, :area
+
+  AREAS = [:home, :forest, :labyrinth, :town, :sun_chamber]
+
+  def initialize
+    @position = {x: 0, y: 0}
+    @energy = 100
+    @light_source = false
+    @inventory = []
+    @area = :home
+    puts "NIKO_INIT >> Area: #{@area} Position: #{@position} Energy: #{@energy}"
+  end
+
+  def move(dx, dy)
+    @position[:x] += dx
+    @position[:y] += dy
+    drain_energy(dx, dy)
+    log_position
+    trigger_area_events
+  end
+
+  def drain_energy(dx, dy)
+    distance = Math.sqrt(dx**2 + dy**2)
+    @energy -= (distance * 0.3).to_i
+    @energy = 0 if @energy < 0
+  end
+
+  def pick_up(item)
+    @inventory << item
+    puts "ITEM_PICKED >> #{item} | Inventory: #{@inventory}"
+    case item
+    when :lamp
+      @light_source = true
+      puts "LIGHT_STATUS >> Lamp activated"
+    when :key
+      puts "PUZZLE_STATUS >> Can now unlock doors"
+    when :map
+      puts "MAP_ACQUIRED >> Reveals hidden paths"
+    end
+  end
+
+  def interact(object)
+    case object
+    when :lamp_post
+      if @light_source
+        puts "LAMP_USED >> Area illuminated"
+      else
+        puts "LAMP_DARK >> Niko needs a light source"
+      end
+    when :npc
+      puts "NPC_DIALOG >> 'Are you still carrying the lamp?'"
+    when :door
+      if @inventory.include?(:key)
+        puts "DOOR_UNLOCKED >> Proceed to next area"
+        next_area
+      else
+        puts "DOOR_LOCKED >> Key required"
+      end
+    when :puzzle
+      solve_puzzle
+    else
+      puts "INTERACT_UNKNOWN >> #{object}"
+    end
+  end
+
+  def solve_puzzle
+    puts "PUZZLE_SOLVING >> Niko attempts to solve puzzle..."
+    if rand > 0.5
+      puts "PUZZLE_SUCCESS >> Path cleared"
+    else
+      puts "PUZZLE_FAIL >> Niko needs more clues"
+    end
+  end
+
+  def next_area
+    current_index = AREAS.index(@area)
+    if current_index < AREAS.size - 1
+      @area = AREAS[current_index + 1]
+      @position = {x:0, y:0}
+      puts "AREA_CHANGED >> New area: #{@area}"
+    else
+      puts "AREA_END >> No further areas"
+    end
+  end
+
+  def log_position
+    puts "NIKO_POSITION >> Area: #{@area} X:#{@position[:x]} Y:#{@position[:y]} Energy:#{@energy}"
+  end
+
+  def status
+    puts "STATUS >> Area: #{@area} Position: #{@position} Energy:#{@energy} Light:#{@light_source} Inventory:#{@inventory}"
+  end
+end
