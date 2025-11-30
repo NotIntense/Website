@@ -71,3 +71,19 @@ canvas {
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
+#text {
+  color: white;
+  font-size: 24px;
+  font-family: sans-serif;
+}
+
+#home-link {
+  color: #ffd85e;        
+  text-decoration: none;
+}
+
+#home-link:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
