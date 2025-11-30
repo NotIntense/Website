@@ -87,13 +87,3 @@ canvas {
   opacity: 0.8;
 }
 
-a {
-  color: inherit;         
-  text-decoration: underline; 
-}
-
-a:visited {
-  color: inherit;         
-}
-
-
