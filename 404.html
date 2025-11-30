@@ -3,7 +3,21 @@
 <head>
   <title>Page Not Found</title>
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 50px; }
+    /* Make the body stretch full height + center stuff */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;   /* horizontal center */
+      align-items: center;       /* vertical center */
+      background-color: #000;    /* change this to whatever color matches your image */
+    }
+
+    img {
+      max-width: 80vw;    /* prevents image from getting too huge */
+      max-height: 80vh;
+    }
   </style>
 </head>
 <body>
