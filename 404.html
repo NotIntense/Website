@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>404 - Page Not Found</title>
+  <link rel="icon" type="image/x-icon" href="https://notintense.com/textures/favico.ico">
+  <style>
+
+    @font-face {
+        font-family: 'TerminusBold';
+        src: url("https://notintense.com/fonts/Terminus(TTF)Bold700.ttf") format("truetype");
+        font-weight: bold;
+        font-style: normal;
+    }
+
+
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;  
+      justify-content: center;
+      align-items: center;
+      background-color: #000; 
+      color: #fff;             
+      font-family: 'TerminusBold', sans-serif;
+      text-align: center;
+    }
+
+    img {
+      max-width: 80vw;
+      max-height: 80vh;
+      pointer-events: none;     
+      opacity: 0;             
+      animation: fadeIn 2s ease forwards; 
+    }
+
+    a {
+    color: #ffd85e;     
+    text-decoration: none;
+    }
+
+    a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+    }
+
+    a:visited {
+    color: #ffd85e;
+    }
+
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+    <meta property="og:title" content="404 - World dead.">
+    <meta property="og:description" content="Even if you bring back the sun, it will not go away.">
+    <meta property="og:url" content="https://notintense.com/404">
+    <meta property="og:image" content="https://notintense.com/textures/broken_sun_transparent.png">
+    <meta property="og:type" content="website">
+
+
+    <div id="text">
+        <B>404: This world is dead, maybe 
+        <a href="/">the next one</a></B>.
+    </div>
+  <img src="https://notintense.com/textures/broken_sun.png">
+</body>
+</html>
