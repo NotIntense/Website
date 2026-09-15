@@ -66,7 +66,6 @@ instancedMesh.instanceMatrix.needsUpdate = true;
 
 let frame = 0;
 let originalCameraPos = camera.position.clone();
-let targetOffset = new THREE.Vector3();
 
 let mouse = { x: 0, y: 0 };
 
@@ -75,29 +74,54 @@ window.addEventListener('mousemove', (ev) => {
     mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
 });
 
+const maxSway = 0.5;
+const targetOffset = new THREE.Vector3();
+const targetPos = new THREE.Vector3();
+
 function animate() {
     requestAnimationFrame(animate);
 
-    //controls.update();
+    const t = frame;
 
-    particles.forEach(pGroup => {
-    pGroup.forEach(p => {
-        const { index, position } = p;
-        dummy.position.set(position.x, Math.sin(Math.sqrt((position.x + maxDis) ** 2 + (position.z + maxDis) ** 2) / 3 + frame) * 2, position.z);
-        dummy.updateMatrix();
-        instancedMesh.setMatrixAt(index, dummy.matrix);
-      });
-    });
+    for (let g = 0; g < particles.length; g++) {
+        const group = particles[g];
+
+        for (let i = 0; i < group.length; i++) {
+            const p = group[i];
+            const { index, position } = p;
+
+            const distSq =
+                (position.x + maxDis) ** 2 +
+                (position.z + maxDis) ** 2;
+
+            dummy.position.set(
+                position.x,
+                Math.sin(Math.sqrt(distSq) / 3 + t) * 2,
+                position.z
+            );
+
+            dummy.updateMatrix();
+            instancedMesh.setMatrixAt(index, dummy.matrix);
+        }
+    }
+
     instancedMesh.instanceMatrix.needsUpdate = true;
+    
+    targetOffset.set(
+        mouse.x * maxSway,
+        mouse.y * maxSway,
+        0
+    );
 
-    const maxSway = 0.5;
-    const targetOffset = new THREE.Vector3(mouse.x * maxSway, mouse.y * maxSway, 0);
-    const targetPos = originalCameraPos.clone().add(targetOffset);
+    targetPos.copy(originalCameraPos).add(targetOffset);
+
     camera.position.lerp(targetPos, 0.1);
 
     frame += 0.01;
+
     renderer.render(scene, camera);
 }
+
 animate();
 
 window.addEventListener('resize', () => {
