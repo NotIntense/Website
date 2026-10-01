@@ -3,13 +3,17 @@ import * as THREE from './modules/three.module.js';
 navigator.gpu?.requestAdapter({ powerPreference: "high-performance" });
 
 document.getElementById('content-container').classList.add('visible');
-  document.getElementById('bg').style.opacity = 1;
-  let cards = document.getElementById('pfctnr').getElementsByClassName('card');
-  for (let i = 0; i < cards.length; i++) {
-    cards[i].style.opacity = 1;
-  }
+document.getElementById('bg').style.opacity = 1;
 
-document.getElementById('content-container').style.opacity='1';
+const cards = document
+    .getElementById('pfctnr')
+    .getElementsByClassName('card');
+
+for (let i = 0; i < cards.length; i++) {
+    cards[i].style.opacity = 1;
+}
+
+document.getElementById('content-container').style.opacity = '1';
 
 const maxDis = 50;
 const gridSize = 3;
@@ -18,7 +22,13 @@ const step = 0.3;
 const scene = new THREE.Scene();
 const noise = new Noise(Math.random());
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+
 camera.lookAt(0, -10, 0);
 camera.position.set(0, 25, 0);
 
@@ -31,43 +41,71 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 const pointLight = new THREE.PointLight(0xffffff, 1000);
 pointLight.position.set(10, 10, 10);
-
 scene.add(pointLight);
 
 const sphereGeometry = new THREE.SphereGeometry(0.04, 24, 24);
-const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+const material = new THREE.MeshStandardMaterial({
+    color: 0xffffff
+});
 
 const gridWidth = maxDis * 2;
 const totalInstances = gridWidth * gridWidth;
 
-const instancedMesh = new THREE.InstancedMesh(sphereGeometry, material, totalInstances);
+const instancedMesh = new THREE.InstancedMesh(
+    sphereGeometry,
+    material,
+    totalInstances
+);
+
 scene.add(instancedMesh);
 
-
-let particles = [];
+const particles = [];
 let index = 0;
+
 const dummy = new THREE.Object3D();
 
 for (let x = -maxDis; x < maxDis; x++) {
-    let pGroup = [];
+    const pGroup = [];
+
     for (let z = -maxDis; z < maxDis; z++) {
         const pos = new THREE.Vector3(x, 0, z);
+
         dummy.position.copy(pos);
         dummy.updateMatrix();
+
         instancedMesh.setMatrixAt(index, dummy.matrix);
 
-        pGroup.push({ index, position: pos.clone() });
+        pGroup.push({
+            index,
+            position: pos.clone()
+        });
+
         index++;
     }
+
     particles.push(pGroup);
 }
+
 instancedMesh.instanceMatrix.needsUpdate = true;
 
 
-let frame = 0;
-let originalCameraPos = camera.position.clone();
+// --------------------------------------------------
+// TIME
+// --------------------------------------------------
 
-let mouse = { x: 0, y: 0 };
+const clock = new THREE.Clock();
+
+
+// --------------------------------------------------
+// CAMERA / MOUSE
+// --------------------------------------------------
+
+const originalCameraPos = camera.position.clone();
+
+const mouse = {
+    x: 0,
+    y: 0
+};
 
 window.addEventListener('mousemove', (ev) => {
     mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
@@ -75,19 +113,59 @@ window.addEventListener('mousemove', (ev) => {
 });
 
 const maxSway = 0.5;
+
 const targetOffset = new THREE.Vector3();
 const targetPos = new THREE.Vector3();
+
+
+// --------------------------------------------------
+// ANIMATION SETTINGS
+// --------------------------------------------------
+
+// Original animation:
+// frame += 0.01
+//
+// At 60 FPS:
+// 0.01 * 60 = 0.6 radians/sec
+
+const waveSpeed = 0.6;
+
+// Camera smoothing.
+// This converts the smoothing into a time-based exponential
+// interpolation. Approximately equivalent to lerp(0.1)
+// at 60 FPS.
+
+const cameraSmoothing = 0.1;
+const referenceFPS = 60;
+
+const cameraSmoothingRate =
+    -Math.log(1 - cameraSmoothing) * referenceFPS;
+
+
+// --------------------------------------------------
+// ANIMATION
+// --------------------------------------------------
 
 function animate() {
     requestAnimationFrame(animate);
 
-    const t = frame;
+    // Real elapsed time in seconds.
+    const elapsedTime = clock.getElapsedTime();
+
+    // Wave time.
+    const t = elapsedTime * waveSpeed;
+
+
+    // --------------------------------------------------
+    // UPDATE PARTICLES
+    // --------------------------------------------------
 
     for (let g = 0; g < particles.length; g++) {
         const group = particles[g];
 
         for (let i = 0; i < group.length; i++) {
             const p = group[i];
+
             const { index, position } = p;
 
             const distSq =
@@ -96,72 +174,141 @@ function animate() {
 
             dummy.position.set(
                 position.x,
-                Math.sin(Math.sqrt(distSq) / 3 + t) * 2,
+                Math.sin(
+                    Math.sqrt(distSq) / 3 + t
+                ) * 2,
                 position.z
             );
 
             dummy.updateMatrix();
-            instancedMesh.setMatrixAt(index, dummy.matrix);
+
+            instancedMesh.setMatrixAt(
+                index,
+                dummy.matrix
+            );
         }
     }
 
     instancedMesh.instanceMatrix.needsUpdate = true;
-    
+
+
+    // --------------------------------------------------
+    // MOUSE CAMERA MOVEMENT
+    // --------------------------------------------------
+
     targetOffset.set(
         mouse.x * maxSway,
         mouse.y * maxSway,
         0
     );
 
-    targetPos.copy(originalCameraPos).add(targetOffset);
+    targetPos
+        .copy(originalCameraPos)
+        .add(targetOffset);
 
-    camera.position.lerp(targetPos, 0.1);
 
-    frame += 0.01;
+    // Frame-rate-independent smoothing.
+    //
+    // At 60 FPS this behaves approximately like:
+    //
+    // camera.position.lerp(targetPos, 0.1);
+    //
+    // but maintains the same behavior at 30, 120,
+    // 144, 240 FPS, etc.
+
+    const deltaTime = clock.getDelta();
+
+    const smoothingAlpha =
+        1 - Math.exp(
+            -cameraSmoothingRate * deltaTime
+        );
+
+    camera.position.lerp(
+        targetPos,
+        smoothingAlpha
+    );
+
+
+    // --------------------------------------------------
+    // RENDER
+    // --------------------------------------------------
 
     renderer.render(scene, camera);
 }
 
 animate();
 
+
+// --------------------------------------------------
+// RESIZE
+// --------------------------------------------------
+
 window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect =
+        window.innerWidth / window.innerHeight;
+
     camera.updateProjectionMatrix();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
 });
 
+
+// --------------------------------------------------
+// SITE STATUS
+// --------------------------------------------------
+
 const statusEl = document.getElementById('site-status');
-fetch('/api/status.txt').then(res => res.text()).then(text => {
 
-    const statusText = text;
-    if (statusText && statusText.trim() !== "") {
-    statusEl.textContent = statusText;
-    statusEl.style.display = "block";
-    requestAnimationFrame(() => {
-      document.documentElement.style.setProperty('--site-status-height', `${statusEl.offsetHeight}px`);
+fetch('/api/status.txt')
+    .then(res => res.text())
+    .then(text => {
+        const statusText = text;
+
+        if (statusText && statusText.trim() !== '') {
+            statusEl.textContent = statusText;
+            statusEl.style.display = 'block';
+
+            requestAnimationFrame(() => {
+                document.documentElement.style.setProperty(
+                    '--site-status-height',
+                    `${statusEl.offsetHeight}px`
+                );
+            });
+        } else {
+            statusEl.style.display = 'none';
+
+            document.documentElement.style.setProperty(
+                '--site-status-height',
+                '0px'
+            );
+        }
     });
-    } 
-    else {
-      statusEl.style.display = "none";
-      document.documentElement.style.setProperty('--site-status-height', `0px`);
-    }
-    
-  });
 
-const toggleBtn = document.getElementById("toggle-ui");
-const uiContainer = document.querySelector(".profileContainer");
-const icon = toggleBtn.querySelector("i");
+
+// --------------------------------------------------
+// UI TOGGLE
+// --------------------------------------------------
+
+const toggleBtn = document.getElementById('toggle-ui');
+const uiContainer = document.querySelector('.profileContainer');
+const icon = toggleBtn.querySelector('i');
 
 let uiVisible = true;
-toggleBtn.addEventListener("click", () => {
-  uiVisible = !uiVisible;
-  uiContainer.style.display = uiVisible ? "flex" : "none";
-  if (uiVisible) {
-    icon.classList.remove("fa-eye-slash");
-    icon.classList.add("fa-eye");
-  } else {
-    icon.classList.remove("fa-eye");
-    icon.classList.add("fa-eye-slash");
-  }
+
+toggleBtn.addEventListener('click', () => {
+    uiVisible = !uiVisible;
+
+    uiContainer.style.display =
+        uiVisible ? 'flex' : 'none';
+
+    if (uiVisible) {
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    } else {
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    }
 });
