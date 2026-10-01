@@ -1,3 +1,136 @@
+import * as THREE from './modules/three.module.js';
+
+navigator.gpu?.requestAdapter({ powerPreference: "high-performance" });
+
+document.getElementById('content-container').classList.add('visible');
+  document.getElementById('bg').style.opacity = 1;
+  let cards = document.getElementById('pfctnr').getElementsByClassName('card');
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].style.opacity = 1;
+  }
+
+document.getElementById('content-container').style.opacity='1';
+
+const maxDis = 50;
+const gridSize = 3;
+const step = 0.3;
+
+const scene = new THREE.Scene();
+const noise = new Noise(Math.random());
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.lookAt(0, -10, 0);
+camera.position.set(0, 25, 0);
+
+const renderer = new THREE.WebGLRenderer({
+    canvas: document.querySelector('#bg'),
+});
+
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const pointLight = new THREE.PointLight(0xffffff, 1000);
+pointLight.position.set(10, 10, 10);
+
+scene.add(pointLight);
+
+const sphereGeometry = new THREE.SphereGeometry(0.04, 24, 24);
+const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+
+const gridWidth = maxDis * 2;
+const totalInstances = gridWidth * gridWidth;
+
+const instancedMesh = new THREE.InstancedMesh(sphereGeometry, material, totalInstances);
+scene.add(instancedMesh);
+
+
+let particles = [];
+let index = 0;
+const dummy = new THREE.Object3D();
+
+for (let x = -maxDis; x < maxDis; x++) {
+    let pGroup = [];
+    for (let z = -maxDis; z < maxDis; z++) {
+        const pos = new THREE.Vector3(x, 0, z);
+        dummy.position.copy(pos);
+        dummy.updateMatrix();
+        instancedMesh.setMatrixAt(index, dummy.matrix);
+
+        pGroup.push({ index, position: pos.clone() });
+        index++;
+    }
+    particles.push(pGroup);
+}
+instancedMesh.instanceMatrix.needsUpdate = true;
+
+
+let frame = 0;
+let originalCameraPos = camera.position.clone();
+
+let mouse = { x: 0, y: 0 };
+
+window.addEventListener('mousemove', (ev) => {
+    mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
+});
+
+const maxSway = 0.5;
+const targetOffset = new THREE.Vector3();
+const targetPos = new THREE.Vector3();
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    const t = frame;
+
+    for (let g = 0; g < particles.length; g++) {
+        const group = particles[g];
+
+        for (let i = 0; i < group.length; i++) {
+            const p = group[i];
+            const { index, position } = p;
+
+            const distSq =
+                (position.x + maxDis) ** 2 +
+                (position.z + maxDis) ** 2;
+
+            dummy.position.set(
+                position.x,
+                Math.sin(Math.sqrt(distSq) / 3 + t) * 2,
+                position.z
+            );
+
+            dummy.updateMatrix();
+            instancedMesh.setMatrixAt(index, dummy.matrix);
+        }
+    }
+
+    instancedMesh.instanceMatrix.needsUpdate = true;
+    
+    targetOffset.set(
+        mouse.x * maxSway,
+        mouse.y * maxSway,
+        0
+    );
+
+    targetPos.copy(originalCameraPos).add(targetOffset);
+
+    camera.position.lerp(targetPos, 0.1);
+
+    frame += 0.01;
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
 const statusEl = document.getElementById('site-status');
 
 fetch('/api/status.txt')
@@ -20,8 +153,4 @@ fetch('/api/status.txt')
       statusEl.style.display = "none";
       document.documentElement.style.setProperty('--site-status-height', '0px');
     }
-
-
-
-    
 });
